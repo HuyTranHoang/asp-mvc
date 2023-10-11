@@ -1,0 +1,36 @@
+﻿// Variables
+
+$primary: #e685b5;
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+
+//$pink: $pink-300;
+//
+//$component-active-bg: $pink;
+//
+//$custom-theme-colors: (
+//      "pink": $pink
+//);
+//
+//$theme-colors: map-merge($custom-theme-colors,$theme-colors);
+//$table-variants: map-merge($custom-theme-colors,$table-variants);
+
+// Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+// Default layout css
+@import 'site';
+
+// My css
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-gradient-bg {
+  background: rgb(63,94,251);
+  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+}

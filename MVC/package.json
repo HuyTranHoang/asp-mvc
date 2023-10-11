@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.2"
+  },
+  "name": "mvc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass:watch": "sass --watch scss/style.scss:wwwroot/css/style.css --style compressed",
+    "sass": "sass scss/style.scss:wwwroot/css/style.css --style compressed"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
