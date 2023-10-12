@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC.Dao;
 using MVC.Models;
+using MVC.Utils;
 
 
 namespace MVC.Controllers;
@@ -9,6 +10,15 @@ public class CategoryController : Controller
 {
     private readonly IGenericRepository<Category> _categoryRepository;
     private readonly ILogger<CategoryController> _logger;
+
+    public enum SortOrder
+    {
+        NameAsc,
+        NameDesc,
+        DisplayOrderAsc,
+        DisplayOrderDesc
+    }
+
     [TempData] public string? SuccessMessage { get; set; }
 
     public CategoryController(IGenericRepository<Category> categoryRepository, ILogger<CategoryController> logger)
@@ -17,9 +27,22 @@ public class CategoryController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index(int? page, string? s)
+    public IActionResult Index(int? page, string? s, SortOrder? sortOrder)
     {
         var query = _categoryRepository.GetAll().AsQueryable();
+
+        ViewBag.NameSortParam = sortOrder == SortOrder.NameAsc
+            ? SortOrder.NameDesc
+            : SortOrder.NameAsc;
+
+        ViewBag.DisplayOrderSortParam = sortOrder == SortOrder.DisplayOrderAsc
+            ? SortOrder.DisplayOrderDesc
+            : SortOrder.DisplayOrderAsc;
+
+        if (sortOrder != null)
+        {
+            query = query.ApplySortCategory(sortOrder);
+        }
 
         if (!string.IsNullOrEmpty(s))
         {
@@ -27,15 +50,12 @@ public class CategoryController : Controller
         }
 
         var pageNumber = page ?? 1;
-        var pageSize = 5;
         var recsCount = query.Count();
-        var pager = new Pager(recsCount, pageNumber, pageSize);
+        var pager = new Pager(recsCount, pageNumber);
 
-        var recSkip = (pageNumber - 1) * pageSize;
+        var recSkip = (pageNumber - 1) * pager.PageSize;
 
-        var onePageOfCategories = query.OrderBy(c => c.Id)
-            .Skip(recSkip)
-            .Take(pager.PageSize);
+        var onePageOfCategories = query.Skip(recSkip).Take(pager.PageSize);
 
         ViewBag.Pager = pager;
 
@@ -52,19 +72,7 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Add([Bind("Name, DisplayOrder")] Category category)
     {
-        bool checkCategoryNameExist = _categoryRepository.GetAll().Any(c => c.Name == category.Name);
-        bool checkCategoryDisplayOrderExist =
-            _categoryRepository.GetAll().Any(c => c.DisplayOrder == category.DisplayOrder);
-
-        if (checkCategoryNameExist)
-        {
-            ModelState.AddModelError("Name", "The category name already exist");
-        }
-
-        if (checkCategoryDisplayOrderExist)
-        {
-            ModelState.AddModelError("DisplayOrder", "The category display order already exist");
-        }
+        Validation(category);
 
         if (ModelState.IsValid)
         {
@@ -98,24 +106,14 @@ public class CategoryController : Controller
 
         if (category != null)
         {
-            bool checkCategoryNameExist = _categoryRepository.GetAll()
-                .Any(c => c.Name == updateCategory.Name && c.Id != updateCategory.Id);
-            bool checkCategoryDisplayOrderExist = _categoryRepository.GetAll()
-                .Any(c => c.DisplayOrder == updateCategory.DisplayOrder && c.Id != updateCategory.Id);
+            Validation(updateCategory, true);
 
-            if (checkCategoryNameExist)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Name", "The category name already exist");
+                category.Name = updateCategory.Name;
+                category.DisplayOrder = updateCategory.DisplayOrder;
+                _categoryRepository.Update(category);
             }
-
-            if (checkCategoryDisplayOrderExist)
-            {
-                ModelState.AddModelError("DisplayOrder", "The category display order already exist");
-            }
-
-            category.Name = updateCategory.Name;
-            category.DisplayOrder = updateCategory.DisplayOrder;
-            _categoryRepository.Update(category);
 
             if (_categoryRepository.Save() > 0)
             {
@@ -136,9 +134,38 @@ public class CategoryController : Controller
         if (_categoryRepository.Save() > 0)
         {
             SuccessMessage = "Category deleted";
-            return RedirectToAction("Index", new{page});
+            return RedirectToAction("Index", new { page });
         }
 
         return BadRequest();
+    }
+
+    private void Validation(Category category, bool isUpdate = false)
+    {
+        bool checkCategoryNameExist, checkCategoryDisplayOrderExist;
+        if (!isUpdate)
+        {
+            checkCategoryNameExist = _categoryRepository.GetAll()
+                .Any(c => c.Name == category.Name);
+            checkCategoryDisplayOrderExist = _categoryRepository.GetAll()
+                .Any(c => c.DisplayOrder == category.DisplayOrder);
+        }
+        else
+        {
+            checkCategoryNameExist = _categoryRepository.GetAll()
+                .Any(c => c.Name == category.Name && c.Id != category.Id);
+            checkCategoryDisplayOrderExist = _categoryRepository.GetAll()
+                .Any(c => c.DisplayOrder == category.DisplayOrder && c.Id != category.Id);
+        }
+
+        if (checkCategoryNameExist)
+        {
+            ModelState.AddModelError("Name", "The category name already exist");
+        }
+
+        if (checkCategoryDisplayOrderExist)
+        {
+            ModelState.AddModelError("DisplayOrder", "The category display order already exist");
+        }
     }
 }

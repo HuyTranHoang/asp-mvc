@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Aptech\\ASP\\MVC\\MVC\\MVC.csproj": {}
+    "D:\\Aptech\\ASP\\MVC\\mvc\\MVC.csproj": {}
   },
   "projects": {
-    "D:\\Aptech\\ASP\\MVC\\MVC\\MVC.csproj": {
+    "D:\\Aptech\\ASP\\MVC\\mvc\\MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Aptech\\ASP\\MVC\\MVC\\MVC.csproj",
+        "projectUniqueName": "D:\\Aptech\\ASP\\MVC\\mvc\\MVC.csproj",
         "projectName": "MVC",
-        "projectPath": "D:\\Aptech\\ASP\\MVC\\MVC\\MVC.csproj",
+        "projectPath": "D:\\Aptech\\ASP\\MVC\\mvc\\MVC.csproj",
         "packagesPath": "C:\\Users\\nhokp\\.nuget\\packages\\",
-        "outputPath": "D:\\Aptech\\ASP\\MVC\\MVC\\obj\\",
+        "outputPath": "D:\\Aptech\\ASP\\MVC\\mvc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nhokp\\AppData\\Roaming\\NuGet\\NuGet.Config",

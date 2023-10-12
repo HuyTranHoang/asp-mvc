@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1jJgpPfGCprEA7Q1NAD3KL8VZgKS4qEXcTE8+AmSPtbWgf/jY78BBy5fcu+6lJ2N+hkG8me0CREwwWEQpHUzLg==",
+  "dgSpecHash": "qzTxSBO7Un4dUPkbYk+rWVB6CGWX+6vJ7K6Jel+iAWWvfMRqsQQsOfoCAYUljefMGy7ewvRCwY33I87XdMpbJw==",
   "success": true,
-  "projectFilePath": "D:\\Aptech\\ASP\\MVC\\MVC\\MVC.csproj",
+  "projectFilePath": "D:\\Aptech\\ASP\\MVC\\mvc\\MVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nhokp\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\nhokp\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

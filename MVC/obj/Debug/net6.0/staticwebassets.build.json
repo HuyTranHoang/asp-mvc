@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5Ecl/Bdw2UlA1KrkelwpWbHXo3+bMKUhU7feGREvc84=",
+  "Hash": "MkksD7kpBZGSVsTvQkohMz2PHa1LhcDBVPE27F7UDjI=",
   "Source": "MVC",
   "BasePath": "_content/MVC",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "MVC\\wwwroot",
       "Source": "MVC",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\css\\style.css",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\css\\style.css",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "css/style.css",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\css\\style.css.map",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\css\\style.css.map",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "css/style.css.map",
       "AssetKind": "All",
@@ -51,10 +51,10 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css.map"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\css\\sweetalert2.min.css",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\css\\sweetalert2.min.css",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "css/sweetalert2.min.css",
       "AssetKind": "All",
@@ -68,10 +68,10 @@
       "OriginalItemSpec": "wwwroot\\css\\sweetalert2.min.css"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\favicon.ico",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\favicon.ico",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -85,10 +85,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\images\\gura.jpg",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\images\\gura.jpg",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "images/gura.jpg",
       "AssetKind": "All",
@@ -102,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\images\\gura.jpg"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\js\\bootstrap.bundle.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\js\\bootstrap.bundle.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -119,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\js\\jquery-3.7.1.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\js\\jquery-3.7.1.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "js/jquery-3.7.1.min.js",
       "AssetKind": "All",
@@ -136,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\js\\jquery-3.7.1.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\js\\site.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\js\\site.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -153,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\js\\sweetalert2.all.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\js\\sweetalert2.all.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "js/sweetalert2.all.min.js",
       "AssetKind": "All",
@@ -170,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\js\\sweetalert2.all.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -187,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -204,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -221,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -238,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -255,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -272,10 +272,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -289,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -306,10 +306,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -323,10 +323,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -340,10 +340,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -357,10 +357,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "MVC",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\MVC\\wwwroot\\",
+      "ContentRoot": "D:\\Aptech\\ASP\\MVC\\mvc\\wwwroot\\",
       "BasePath": "_content/MVC",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",

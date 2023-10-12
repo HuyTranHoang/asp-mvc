@@ -1,15 +1,18 @@
 ﻿@model string
 
 @{
-    var message = @Html.Raw(Json.Serialize(Model));
+    var message = Html.Raw(Json.Serialize(Model));
 }
 
-<script >
-    /*global Swal */
-    Swal.fire({
-      icon: 'success',
-      title: 'Successfully!',
-      text: '@message',
-      timer: 1500
-    })
-</script>
+@if (!string.IsNullOrEmpty(Model))
+{
+    <script >
+        /*global Swal */
+        Swal.fire({
+          icon: 'success',
+          title: 'Successfully!',
+          text: '@Model',
+          timer: 1500
+        })
+    </script>
+}

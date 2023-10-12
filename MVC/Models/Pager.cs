@@ -2,6 +2,7 @@
 
 public class Pager
 {
+    private const int DefaultPageSize = 5;
     public int TotalItems { get; }
     public int CurrentPage { get; }
     public int PageSize { get; }
@@ -16,7 +17,7 @@ public class Pager
     {
     }
 
-    public Pager(int totalItems, int currentPage, int pageSize)
+    public Pager(int totalItems, int currentPage, int pageSize = DefaultPageSize)
     {
         TotalItems = totalItems;
         PageSize = pageSize;

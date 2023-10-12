@@ -23,7 +23,8 @@
             $('.delete-category').on('click', async function () {
                 const form = $('#deleteForm');
                 const categoryId = $(this).data('id')
-                form.attr('action', `/Category/Delete/${categoryId}`);
+                form.attr('action', `/Category/Delete/${categoryId}`)
+
                 const result = await Swal.fire({
                   title: 'Are you sure?',
                   text: "You won't be able to revert this!",

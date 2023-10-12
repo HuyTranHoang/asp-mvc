@@ -2,18 +2,18 @@
 
 @{
     ViewData["Title"] = "Category";
+    ViewData["ControllerName"] = "Category";
+
     var index = 1;
+
+    var pager = ViewBag.Pager != null? ViewBag.Pager : new Pager();
+
+    var searchString = Context.Request.Query["s"];
 
     var successMessage = TempData["SuccessMessage"];
 
-    var pager = new Pager();
-    if (ViewBag.Pager != null)
-    {
-        pager = ViewBag.Pager;
-    }
-    ViewData["ControllerName"] = "Category";
-
-    var searchString = Context.Request.Query["s"];
+    var nameSortParam = ViewBag.NameSortParam;
+    var displayOrderSortParam = ViewBag.DisplayOrderSortParam;
 }
 
 <h1>Category</h1>
@@ -35,8 +35,14 @@
     <thead>
     <tr class="table-primary">
         <th scope="col">#</th>
-        <th scope="col">Name </th>
-        <th scope="col">Display Order</th>
+        <th scope="col">
+            Name
+            <partial name="_partials/sortColumn" model="@nameSortParam"/>
+        </th>
+        <th scope="col">
+            Display Order
+            <partial name="_partials/sortColumn" model="@displayOrderSortParam"/>
+        </th>
         <th scope="col">Created At</th>
         <th scope="col">Actions</th>
     </tr>
@@ -76,18 +82,7 @@
 
 <partial model="pager" name="_Pager" />
 
-@if (successMessage != null)
-{
-    var message = successMessage.ToString();
-
-    @section Scripts {
-        <partial model="message" name="_NotificationScriptsPartial" />
-        <partial model="pager" name="_partials/deleteScript" />
-    }
-}
-else
-{
-    @section Scripts {
-        <partial model="pager" name="_partials/deleteScript" />
-    }
+@section Scripts {
+    <partial model="successMessage" name="_NotificationScriptsPartial" />
+    <partial model="pager" name="_partials/deleteScript" />
 }
