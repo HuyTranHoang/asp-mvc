@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Category";
+    ViewData["ControllerName"] = "Category";
+
+    var index = 1;
+
+    var pager = ViewBag.Pager != null ? ViewBag.Pager : new Pager();
+
+    var searchString = Context.Request.Query["s"];
+
+    var successMessage = TempData["SuccessMessage"];
+
+    var nameSortParam = ViewBag.NameSortParam;
+    var displayOrderSortParam = ViewBag.DisplayOrderSortParam;
+    var createdAtParam = ViewBag.CreatedAtParam;
+}
+
+<section class="mt-4 pb-3 shadow-lg bg-body-tertiary rounded-bottom">
+    <h1 class="bg-secondary bg-gradient px-3 py-4 rounded-top text-center">Category List</h1>
+
+    <div class="d-flex justify-content-end px-4 py-2">
+        <div class="align-items-center d-flex">
+            <form asp-action="Index" class="me-3" method="GET">
+                <input class="form-control" id="search" name="s" placeholder="Search..." type="text" value="@searchString">
+            </form>
+            <a asp-action="Create" class="btn btn-primary text-decoration-none text-white">
+                <i class="fa-plus fa-regular"></i> Create new category
+            </a>
+        </div>
+    </div>
+
+    <div class="p-4">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">#</th>
+                <th scope="col">
+                    Name
+                    <partial model="@nameSortParam" name="_partials/sortColumn" />
+                </th>
+                <th scope="col">
+                    Display Order
+                    <partial model="@displayOrderSortParam" name="_partials/sortColumn" />
+                </th>
+                <th scope="col">
+                    Created At
+                    <partial model="@createdAtParam" name="_partials/sortColumn" />
+                </th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var category in Model)
+            {
+                <tr class="category-item">
+                    <td>@index</td>
+                    <td>@category.Name</td>
+                    <td>@category.DisplayOrder</td>
+                    <td>@category.CreatedAt</td>
+                    <td>
+                        <div class="d-flex">
+                            <a asp-action="Edit" asp-route-id="@category.Id" class="btn btn-secondary fw-semibold me-3 text-white" style="width: 10rem">
+                                <i class="fa-regular fa-pen-to-square"></i> Edit
+                            </a>
+
+                            <button class="btn btn-danger delete-category fw-semibold" data-id="@category.Id" style="width: 10rem">
+                                <i class="fa-regular fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                index++;
+            }
+
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td class="text-center" colspan="5">No category found!</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <partial model="pager" name="_Pager" />
+</section>
+
+@section Scripts {
+    <partial model="successMessage" name="_NotificationScriptsPartial" />
+    <partial model="pager" name="_partials/deleteScript" />
+}

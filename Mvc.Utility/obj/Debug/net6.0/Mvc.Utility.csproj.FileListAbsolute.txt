@@ -1,0 +1,15 @@
+D:\Aptech\ASP\MVC\Mvc.Utility\bin\Debug\net6.0\Mvc.Utility.deps.json
+D:\Aptech\ASP\MVC\Mvc.Utility\bin\Debug\net6.0\Mvc.Utility.dll
+D:\Aptech\ASP\MVC\Mvc.Utility\bin\Debug\net6.0\Mvc.Utility.pdb
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.csproj.AssemblyReference.cache
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.GeneratedMSBuildEditorConfig.editorconfig
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.AssemblyInfoInputs.cache
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.AssemblyInfo.cs
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.csproj.CoreCompileInputs.cache
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.dll
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\refint\Mvc.Utility.dll
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.pdb
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\ref\Mvc.Utility.dll
+D:\Aptech\ASP\MVC\Mvc.Utility\bin\Debug\net6.0\Mvc.Models.dll
+D:\Aptech\ASP\MVC\Mvc.Utility\bin\Debug\net6.0\Mvc.Models.pdb
+D:\Aptech\ASP\MVC\Mvc.Utility\obj\Debug\net6.0\Mvc.Utility.csproj.CopyComplete

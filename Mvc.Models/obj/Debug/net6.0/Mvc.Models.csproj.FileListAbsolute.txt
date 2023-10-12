@@ -1,0 +1,12 @@
+D:\Aptech\ASP\MVC\Mvc.Models\bin\Debug\net6.0\Mvc.Models.deps.json
+D:\Aptech\ASP\MVC\Mvc.Models\bin\Debug\net6.0\Mvc.Models.dll
+D:\Aptech\ASP\MVC\Mvc.Models\bin\Debug\net6.0\Mvc.Models.pdb
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.csproj.AssemblyReference.cache
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.AssemblyInfoInputs.cache
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.AssemblyInfo.cs
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.csproj.CoreCompileInputs.cache
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.dll
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\refint\Mvc.Models.dll
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\Mvc.Models.pdb
+D:\Aptech\ASP\MVC\Mvc.Models\obj\Debug\net6.0\ref\Mvc.Models.dll

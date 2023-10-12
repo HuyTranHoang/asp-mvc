@@ -1,0 +1,17 @@
+D:\Aptech\ASP\MVC\Mvc.DataAccess\bin\Debug\net6.0\Mvc.DataAccess.deps.json
+D:\Aptech\ASP\MVC\Mvc.DataAccess\bin\Debug\net6.0\Mvc.DataAccess.runtimeconfig.json
+D:\Aptech\ASP\MVC\Mvc.DataAccess\bin\Debug\net6.0\Mvc.DataAccess.dll
+D:\Aptech\ASP\MVC\Mvc.DataAccess\bin\Debug\net6.0\Mvc.DataAccess.pdb
+D:\Aptech\ASP\MVC\Mvc.DataAccess\bin\Debug\net6.0\Mvc.Models.dll
+D:\Aptech\ASP\MVC\Mvc.DataAccess\bin\Debug\net6.0\Mvc.Models.pdb
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.csproj.AssemblyReference.cache
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.AssemblyInfoInputs.cache
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.AssemblyInfo.cs
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.csproj.CoreCompileInputs.cache
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.csproj.CopyComplete
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.dll
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\refint\Mvc.DataAccess.dll
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.pdb
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\Mvc.DataAccess.genruntimeconfig.cache
+D:\Aptech\ASP\MVC\Mvc.DataAccess\obj\Debug\net6.0\ref\Mvc.DataAccess.dll
