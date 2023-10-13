@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.3.0/css/all.css">
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
 </head>
-<body data-bs-theme="dark">
+<body data-bs-theme="dark" class="d-flex flex-column vh-100">
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 navbar-gradient-bg" data-bs-theme="dark">
         <div class="container">
@@ -36,13 +36,16 @@
                     <li class="nav-item">
                         <a class="nav-link @(returnUrl.Contains("/Category") ? "active": "")" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(returnUrl.Contains("/Product") ? "active": "")" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
 
-<div class="container">
+<div class="container flex-grow-1">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>

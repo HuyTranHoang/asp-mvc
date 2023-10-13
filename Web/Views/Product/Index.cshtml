@@ -1,0 +1,103 @@
+@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Product";
+    ViewData["ControllerName"] = "Product";
+
+    var index = 1;
+
+    var pager = ViewBag.Pager != null ? ViewBag.Pager : new Pager();
+
+    var searchString = Context.Request.Query["s"];
+
+    var successMessage = TempData["SuccessMessage"];
+}
+<section class="bg-body-tertiary mt-4 pb-3 rounded-bottom shadow-lg">
+    <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Product List</h1>
+
+    <div class="d-flex justify-content-between px-4 py-2">
+        <div class="align-items-center d-flex">
+            <form asp-action="Index" class="me-3 position-relative" method="GET">
+                <input class="form-control" id="search" name="s" placeholder="Search by name..." style="padding-right: 35px" type="text" value="@searchString">
+                <button class="btn end-0 position-absolute top-0" type="submit">
+                    <i class="fa-magnifying-glass fa-solid"></i>
+                </button>
+            </form>
+            @if (!string.IsNullOrEmpty(searchString))
+            {
+                <a asp-action="Index" class="text-decoration-none text-muted">Clear search result</a>
+            }
+        </div>
+        <a asp-action="Create" class="btn btn-primary text-decoration-none text-white">
+            <i class="fa-plus fa-regular"></i> Create new product
+        </a>
+    </div>
+
+    <div class="p-4">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col" style="width: 10%">#</th>
+                <th scope="col">
+                    Name
+                </th>
+                <th scope="col">
+                    Price
+                </th>
+                <th scope="col">
+                    Image
+                </th>
+                <th scope="col">
+                    Category
+                </th>
+                <th scope="col" style="width: 20%">
+                    Created At
+                </th>
+                <th scope="col" style="width: 20%">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var product in Model)
+            {
+                <tr class="category-item">
+                    <td>@index</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <img src="~/images/product/@product.ImageUrl" style="width: 75px" alt="Product image">
+                    </td>
+                    <td>@product.Category.Name</td>
+                    <td>@product.CreatedAt</td>
+                    <td>
+                        <div class="d-flex">
+                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                                <i class="fa-pen-to-square fa-regular"></i> Edit
+                            </a>
+
+                            <button class="btn btn-danger delete-category fw-semibold px-4" data-id="@product.Id">
+                                <i class="fa-regular fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                index++;
+            }
+
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td class="text-center" colspan="5">No product found!</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <partial model="pager" name="_Pager" />
+</section>
+
+@section Scripts {
+    <partial model="successMessage" name="_NotificationScriptsPartial" />
+    <partial model="pager" name="_partials/DeleteScript" />
+}

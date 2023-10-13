@@ -1,6 +1,4 @@
-﻿using MVC.Models;
-
-namespace MVC.DataAccess.Data;
+﻿namespace MVC.Data;
 
 public class AppDbSeeder
 {

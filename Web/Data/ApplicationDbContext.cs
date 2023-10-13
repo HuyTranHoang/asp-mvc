@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVC.Models;
 
-namespace MVC.DataAccess.Data;
+namespace MVC.Data;
 
 public class ApplicationDbContext : DbContext
 {
@@ -11,4 +11,5 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Category> Categories { get; set; } = default!;
+    public DbSet<Product> Products { get; set; } = default!;
 }

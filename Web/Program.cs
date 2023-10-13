@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using MVC.DataAccess.Data;
-using MVC.DataAccess.Repository;
-using MVC.DataAccess.Repository.IRepository;
+using MVC.Data;
 using MVC.Models;
+using MVC.Repository;
+using MVC.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();

@@ -1,0 +1,41 @@
+﻿@* @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" })) *@
+@* { *@
+@*     @Html.AntiForgeryToken() *@
+@*     const form = $('#__AjaxAntiForgeryForm'); *@
+@*     const token = $('input[name="__RequestVerificationToken"]', form).val(); *@
+@*     $.ajax({ *@
+@*         type: 'POST', *@
+@*         url: `/Category/Delete/${categoryId}`, *@
+@*         data: { *@
+@*             __RequestVerificationToken: token *@
+@*         }, *@
+@* } *@
+
+@model Pager
+
+<form asp-action="Delete" id="deleteForm">
+    <input type="hidden" value="@Model.CurrentPage" name="page">
+</form>
+
+<script >
+        /*global Swal*/
+        $(function () {
+            $('.delete-category').on('click', async function () {
+                const form = $('#deleteForm');
+                const productId = $(this).data('id')
+                form.attr('action', `/Product/Delete/${productId}`)
+
+                const result = await Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it!'
+                })
+
+                if (result && result.isConfirmed) {
+                    form.submit()
+                }
+            })
+        })
+</script>

@@ -20,9 +20,6 @@ $primary: #e685b5;
 // Bootstrap
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-// Default layout css
-@import 'site';
-
 // My css
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
@@ -39,4 +36,8 @@ h1 {
 .btn-gradient {
   background: rgb(238,174,202);
   background: linear-gradient(90deg, rgba(238,174,202,1) 45%, rgba(148,187,233,1) 100%);
+}
+
+.footer {
+  line-height: 60px;
 }

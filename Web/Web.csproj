@@ -31,9 +31,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Mvc.DataAccess\Mvc.DataAccess.csproj" />
-      <ProjectReference Include="..\Mvc.Models\Mvc.Models.csproj" />
-      <ProjectReference Include="..\Mvc.Utility\Mvc.Utility.csproj" />
+      <AdditionalFiles Include="Views\Product\_partials\DeleteScript.cshtml" />
+      <AdditionalFiles Include="Views\Product\_partials\SortColumn.cshtml" />
     </ItemGroup>
 
 </Project>

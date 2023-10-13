@@ -1,27 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC.DataAccess.Repository.IRepository;
+using MVC.Enum;
 using MVC.Models;
+using MVC.Repository.IRepository;
 using MVC.Utility;
-using MVC.Utility.Enum;
 
 namespace MVC.Controllers;
 
 public class CategoryController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ILogger<CategoryController> _logger;
 
     [TempData] public string? SuccessMessage { get; set; }
 
-    public CategoryController(IUnitOfWork unitOfWork, ILogger<CategoryController> logger)
+    public CategoryController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _logger = logger;
     }
 
     public IActionResult Index(int? page, string? s, CategorySortOrder? sortOrder)
     {
         var query = _unitOfWork.CategoryRepository.GetAll().AsQueryable();
+
+        // var query = _unitOfWork.CategoryRepository.Get(null, "DisplayOrder").AsQueryable();
 
         ViewBag.NameSortParam = sortOrder == CategorySortOrder.NameAsc
             ? CategorySortOrder.NameDesc
@@ -67,7 +67,7 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Add(Category category)
+    public IActionResult Store(Category category)
     {
         Validation(category);
 
@@ -83,43 +83,39 @@ public class CategoryController : Controller
         return View("create");
     }
 
-    public IActionResult Edit(int id)
+    public IActionResult Edit(int? id)
     {
-        var category = _unitOfWork.CategoryRepository.GetById(id);
-
-        if (category != null)
+        if (id == null)
         {
-            return View(category);
+            return NotFound();
         }
 
-        return BadRequest();
+        var category = _unitOfWork.CategoryRepository.GetById(id);
+        if (category == null)
+        {
+            return NotFound();
+        }
+        return View(category);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(int id, Category updateCategory)
+    public IActionResult Update(int id, [Bind("Id,Name, DisplayOrder")] Category category)
     {
-        var category = _unitOfWork.CategoryRepository.GetById(id);
-
-        if (category != null)
+        if (id != category.Id)
         {
-            Validation(updateCategory, true);
-
-            if (ModelState.IsValid)
-            {
-                category.Name = updateCategory.Name;
-                category.DisplayOrder = updateCategory.DisplayOrder;
-                _unitOfWork.CategoryRepository.Update(category);
-            }
-
-            if (_unitOfWork.Save() > 0)
-            {
-                SuccessMessage = "Category updated";
-                return RedirectToAction("Index");
-            }
+            return NotFound();
         }
 
-        return View("edit");
+        if (ModelState.IsValid)
+        {
+            _unitOfWork.CategoryRepository.Update(category);
+            _unitOfWork.Save();
+            SuccessMessage = "Product updated";
+            return RedirectToAction("Index");
+        }
+
+        return View("edit", category);
     }
 
     [HttpPost]
