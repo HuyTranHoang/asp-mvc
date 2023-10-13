@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Aptech\\ASP\\MVC\\Web\\Web.csproj": {}
+    "D:\\Aptech\\ASP\\MVC\\web\\Web.csproj": {}
   },
   "projects": {
     "D:\\Aptech\\ASP\\MVC\\Mvc.DataAccess\\Mvc.DataAccess.csproj": {
@@ -207,14 +207,14 @@
         }
       }
     },
-    "D:\\Aptech\\ASP\\MVC\\Web\\Web.csproj": {
+    "D:\\Aptech\\ASP\\MVC\\web\\Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Aptech\\ASP\\MVC\\Web\\Web.csproj",
+        "projectUniqueName": "D:\\Aptech\\ASP\\MVC\\web\\Web.csproj",
         "projectName": "Web",
-        "projectPath": "D:\\Aptech\\ASP\\MVC\\Web\\Web.csproj",
+        "projectPath": "D:\\Aptech\\ASP\\MVC\\web\\Web.csproj",
         "packagesPath": "C:\\Users\\nhokp\\.nuget\\packages\\",
-        "outputPath": "D:\\Aptech\\ASP\\MVC\\Web\\obj\\",
+        "outputPath": "D:\\Aptech\\ASP\\MVC\\web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nhokp\\AppData\\Roaming\\NuGet\\NuGet.Config",

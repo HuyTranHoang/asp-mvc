@@ -18,9 +18,10 @@
 
     var sortOrderQuery = Context.Request.Query["sortOrder"].ToString();
     var currentPage = Context.Request.Query["page"];
+    var searchString = Context.Request.Query["s"];
 }
 
-<a asp-action="Index" asp-route-page="@currentPage" asp-route-sortOrder="@Model" class="text-dark">
+<a asp-action="Index" asp-route-page="@currentPage" asp-route-s="@searchString" asp-route-sortOrder="@Model" class="text-dark">
     @if (!string.IsNullOrEmpty(sortOrderQuery) && sortOrderQuery.Contains(result))
     {
         <i class="fa-duotone fa-sort-@(sortOrderQuery.Contains("Asc") ? "up" : "down")"></i>

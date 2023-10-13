@@ -5,8 +5,7 @@ namespace MVC.Utility;
 
 public static class MyExtensions
 {
-    public static IQueryable<Category> ApplySortCategory(this IQueryable<Category> query,
-        CategorySortOrder? sortOrder)
+    public static IQueryable<Category> ApplySortCategory(this IQueryable<Category> query, CategorySortOrder? sortOrder)
     {
         switch (sortOrder)
         {

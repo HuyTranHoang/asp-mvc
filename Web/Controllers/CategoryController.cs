@@ -43,7 +43,8 @@ public class CategoryController : Controller
 
         if (!string.IsNullOrEmpty(s))
         {
-            query = query.Where(c => c.Name.Contains(s));
+            s = s.Trim();
+            query = query.Where(c => c.Name.Contains(s, StringComparison.OrdinalIgnoreCase));
         }
 
         var pageNumber = page ?? 1;
