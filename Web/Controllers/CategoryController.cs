@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC.DataAccess.Repository;
 using MVC.DataAccess.Repository.IRepository;
 using MVC.Models;
 using MVC.Utility;
@@ -9,20 +8,20 @@ namespace MVC.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly IGenericRepository<Category> _categoryRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<CategoryController> _logger;
 
     [TempData] public string? SuccessMessage { get; set; }
 
-    public CategoryController(IGenericRepository<Category> categoryRepository, ILogger<CategoryController> logger)
+    public CategoryController(IUnitOfWork unitOfWork, ILogger<CategoryController> logger)
     {
-        _categoryRepository = categoryRepository;
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
     public IActionResult Index(int? page, string? s, CategorySortOrder? sortOrder)
     {
-        var query = _categoryRepository.GetAll().AsQueryable();
+        var query = _unitOfWork.CategoryRepository.GetAll().AsQueryable();
 
         ViewBag.NameSortParam = sortOrder == CategorySortOrder.NameAsc
             ? CategorySortOrder.NameDesc
@@ -74,8 +73,8 @@ public class CategoryController : Controller
 
         if (ModelState.IsValid)
         {
-            _categoryRepository.Insert(category);
-            _categoryRepository.Save();
+            _unitOfWork.CategoryRepository.Insert(category);
+            _unitOfWork.Save();
 
             SuccessMessage = "New category added";
             return RedirectToAction("Index");
@@ -86,7 +85,7 @@ public class CategoryController : Controller
 
     public IActionResult Edit(int id)
     {
-        var category = _categoryRepository.GetById(id);
+        var category = _unitOfWork.CategoryRepository.GetById(id);
 
         if (category != null)
         {
@@ -100,7 +99,7 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Update(int id, Category updateCategory)
     {
-        var category = _categoryRepository.GetById(id);
+        var category = _unitOfWork.CategoryRepository.GetById(id);
 
         if (category != null)
         {
@@ -110,10 +109,10 @@ public class CategoryController : Controller
             {
                 category.Name = updateCategory.Name;
                 category.DisplayOrder = updateCategory.DisplayOrder;
-                _categoryRepository.Update(category);
+                _unitOfWork.CategoryRepository.Update(category);
             }
 
-            if (_categoryRepository.Save() > 0)
+            if (_unitOfWork.Save() > 0)
             {
                 SuccessMessage = "Category updated";
                 return RedirectToAction("Index");
@@ -127,41 +126,39 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Delete(int id, string? page)
     {
-        _categoryRepository.Delete(id);
-
-        if (_categoryRepository.Save() > 0)
+        _unitOfWork.CategoryRepository.Delete(id);
+        if (_unitOfWork.Save() > 0)
         {
             SuccessMessage = "Category deleted";
-            return RedirectToAction("Index", new { page });
         }
-
-        return BadRequest();
+        return RedirectToAction("Index", new { page });
     }
 
     private void Validation(Category category, bool isUpdate = false)
     {
-        bool checkCategoryNameExist, checkCategoryDisplayOrderExist;
+        bool categoryNameExist, categoryDisplayOrderExist;
         if (!isUpdate)
         {
-            checkCategoryNameExist = _categoryRepository.GetAll()
-                .Any(c => c.Name == category.Name);
-            checkCategoryDisplayOrderExist = _categoryRepository.GetAll()
-                .Any(c => c.DisplayOrder == category.DisplayOrder);
+            categoryNameExist = _unitOfWork.CategoryRepository
+                .Get(c => c.Name == category.Name).Any();
+
+            categoryDisplayOrderExist = _unitOfWork.CategoryRepository
+                .Get(c => c.Name == category.Name).Any();
         }
         else
         {
-            checkCategoryNameExist = _categoryRepository.GetAll()
-                .Any(c => c.Name == category.Name && c.Id != category.Id);
-            checkCategoryDisplayOrderExist = _categoryRepository.GetAll()
-                .Any(c => c.DisplayOrder == category.DisplayOrder && c.Id != category.Id);
+            categoryNameExist = _unitOfWork.CategoryRepository
+                .Get(c => c.Name == category.Name && c.Id != category.Id).Any();
+            categoryDisplayOrderExist = _unitOfWork.CategoryRepository
+                .Get(c => c.DisplayOrder == category.DisplayOrder && c.Id != category.Id).Any();
         }
 
-        if (checkCategoryNameExist)
+        if (categoryNameExist)
         {
             ModelState.AddModelError("Name", "The category name already exist");
         }
 
-        if (checkCategoryDisplayOrderExist)
+        if (categoryDisplayOrderExist)
         {
             ModelState.AddModelError("DisplayOrder", "The category display order already exist");
         }

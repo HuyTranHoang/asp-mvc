@@ -1,4 +1,6 @@
 ﻿.idea
 .vs
-Mvc.*/bin
-Mvc.*/obj
+Mvc.*/bin/
+Mvc.*/obj/
+Web/bin/
+Web/obj/

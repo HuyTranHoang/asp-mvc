@@ -15,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlServer(connectString);
 });
 
-builder.Services.AddScoped<IGenericRepository<Category>, GenericRepository<Category>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // builder.Logging.ClearProviders();
 
