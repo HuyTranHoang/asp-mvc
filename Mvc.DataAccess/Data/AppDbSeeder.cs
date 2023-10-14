@@ -1,4 +1,4 @@
-﻿namespace MVC.Data;
+﻿namespace Mvc.DataAccess.Data;
 
 public class AppDbSeeder
 {

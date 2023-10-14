@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using MVC.Models;
+using Mvc.Models;
 using Mvc.Utilities.Enum;
 
 namespace Mvc.Utilities;

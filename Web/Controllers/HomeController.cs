@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.DataAccess.Repository.IRepository;
-using MVC.Models;
+using Mvc.Models;
 
-namespace MVC.Controllers;
+namespace Mvc.Controllers;
 
 public class HomeController : Controller
 {

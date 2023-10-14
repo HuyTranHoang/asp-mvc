@@ -1,4 +1,4 @@
-﻿namespace MVC.Models;
+﻿namespace Mvc.Models;
 
 public class Pager
 {

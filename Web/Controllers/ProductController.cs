@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Mvc.DataAccess.Repository.IRepository;
-using MVC.Models;
+using Mvc.Models;
 
-namespace MVC.Controllers;
+namespace Mvc.Controllers;
 
 public class ProductController : Controller
 {
@@ -34,7 +34,7 @@ public class ProductController : Controller
         var onePageOfProducts = query.Skip(recSkip).Take(pager.PageSize);
 
         ViewBag.Pager = pager;
-
+        
         return View(onePageOfProducts);
     }
 
@@ -74,7 +74,6 @@ public class ProductController : Controller
             {
                 var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
                 var productPath = Path.Combine(wwwRootPath, "images/product");
-
 
                 using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                 {

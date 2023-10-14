@@ -1,6 +1,6 @@
 ﻿using Mvc.DataAccess.Data;
 using Mvc.DataAccess.Repository.IRepository;
-using MVC.Models;
+using Mvc.Models;
 
 namespace Mvc.DataAccess.Repository;
 

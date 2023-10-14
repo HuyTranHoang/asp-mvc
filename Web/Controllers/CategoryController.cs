@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mvc.DataAccess.Repository.IRepository;
-using MVC.Models;
+using Mvc.Models;
 using Mvc.Utilities;
 using Mvc.Utilities.Enum;
 
-namespace MVC.Controllers;
+namespace Mvc.Controllers;
 
 public class CategoryController : Controller
 {

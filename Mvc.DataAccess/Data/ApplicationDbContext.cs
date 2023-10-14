@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MVC.Models;
+using Mvc.Models;
 
 namespace Mvc.DataAccess.Data;
 
