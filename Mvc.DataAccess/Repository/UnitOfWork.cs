@@ -1,8 +1,8 @@
-﻿using MVC.Data;
+﻿using Mvc.DataAccess.Data;
+using Mvc.DataAccess.Repository.IRepository;
 using MVC.Models;
-using MVC.Repository.IRepository;
 
-namespace MVC.Repository;
+namespace Mvc.DataAccess.Repository;
 
 public class UnitOfWork : IUnitOfWork
 {

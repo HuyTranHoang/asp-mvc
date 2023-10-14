@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Mvc.DataAccess.Repository.IRepository;
 using MVC.Models;
-using MVC.Repository.IRepository;
 
 namespace MVC.Controllers;
 

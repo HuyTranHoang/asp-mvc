@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using MVC.Data;
-using MVC.Repository.IRepository;
-using MVC.Utility;
+using Mvc.DataAccess.Data;
+using Mvc.DataAccess.Repository.IRepository;
 
-namespace MVC.Repository;
+
+namespace Mvc.DataAccess.Repository;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
@@ -29,7 +29,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             }
         }
 
-        return query;
+        return query.ToList();
     }
 
     public IEnumerable<T> Get(Expression<Func<T, bool>>? filter, string? includeProperties = null, string? orderBy = null, bool isDescending = false)
@@ -50,12 +50,12 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             }
         }
 
-        if (!string.IsNullOrEmpty(orderBy))
-        {
-            query = query.OrderByProperty(orderBy, isDescending);;
-        }
+        // if (!string.IsNullOrEmpty(orderBy))
+        // {
+        //     query = query.OrderByProperty(orderBy, isDescending);
+        // }
 
-        return query;
+        return query.ToList();
     }
 
     public T? GetById(object id)

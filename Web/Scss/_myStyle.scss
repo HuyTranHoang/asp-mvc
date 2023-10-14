@@ -1,0 +1,103 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.navbar-gradient-bg {
+  background: rgb(63, 94, 251);
+  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+}
+
+.btn-gradient {
+  background: rgb(238, 174, 202);
+  background: linear-gradient(90deg, rgba(238, 174, 202, 1) 45%, rgba(148, 187, 233, 1) 100%);
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+}
+
+.footer {
+  line-height: 60px;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: 238px;
+  margin: 10px 0;
+  background: rgba(0, 0, 0, 0.5);
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+}
+
+.image-wrapper-details {
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  height: 416px;
+  margin: 10px 0;
+  background: rgba(0, 0, 0, 0.5);
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+}
+
+.text-ellipsis {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card-hover {
+  top: 0;
+  transition: all 100ms linear;
+
+  &:hover {
+    top: -5px;
+    border: 1px solid $primary;
+  }
+
+  &:hover .details-label {
+    opacity: 1;
+    bottom: -40px;
+  }
+}
+
+.details-label {
+  font-weight: 600;
+  line-height: 40px;
+  position: absolute;
+  bottom: -30px;
+  left: -1px;
+  width: calc(100% + 2px);
+  transition: all 100ms linear;
+  text-align: center;
+  opacity: 0;
+  color: #fff;
+  background-color: $primary;
+}
+
+.category-label {
+  background-color: $primary;
+  padding: 4px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}

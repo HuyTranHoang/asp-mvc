@@ -35,4 +35,10 @@
       <AdditionalFiles Include="Views\Product\_partials\SortColumn.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Mvc.DataAccess\Mvc.DataAccess.csproj" />
+      <ProjectReference Include="..\Mvc.Models\Mvc.Models.csproj" />
+      <ProjectReference Include="..\Mvc.Utilities\Mvc.Utilities.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Mvc.DataAccess.Repository.IRepository;
 using MVC.Models;
-using MVC.Repository.IRepository;
 
 namespace MVC.Controllers;
 

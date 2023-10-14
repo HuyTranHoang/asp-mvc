@@ -1,6 +1,6 @@
 ﻿using MVC.Models;
 
-namespace MVC.Repository.IRepository;
+namespace Mvc.DataAccess.Repository.IRepository;
 
 public interface IUnitOfWork : IDisposable
 {

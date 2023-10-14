@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC.Enum;
+using Mvc.DataAccess.Repository.IRepository;
 using MVC.Models;
-using MVC.Repository.IRepository;
-using MVC.Utility;
+using Mvc.Utilities;
+using Mvc.Utilities.Enum;
 
 namespace MVC.Controllers;
 

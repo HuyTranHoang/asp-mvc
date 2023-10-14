@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using MVC.Data;
-using MVC.Models;
-using MVC.Repository;
-using MVC.Repository.IRepository;
+using Mvc.DataAccess.Data;
+using Mvc.DataAccess.Repository;
+using Mvc.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 

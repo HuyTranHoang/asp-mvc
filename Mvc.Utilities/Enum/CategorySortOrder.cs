@@ -1,4 +1,4 @@
-﻿namespace MVC.Enum;
+﻿namespace Mvc.Utilities.Enum;
 
 public enum CategorySortOrder
 {

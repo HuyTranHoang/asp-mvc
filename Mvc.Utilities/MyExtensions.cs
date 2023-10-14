@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using MVC.Enum;
 using MVC.Models;
+using Mvc.Utilities.Enum;
 
-namespace MVC.Utility;
+namespace Mvc.Utilities;
 
 public static class MyExtensions
 {
