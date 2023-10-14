@@ -1,29 +1,49 @@
 ﻿using System.Linq.Expressions;
 using Mvc.Models;
-using Mvc.Utilities.Enum;
 
 namespace Mvc.Utilities;
 
 public static class MyExtensions
 {
-    public static IQueryable<Category> ApplySortCategory(this IQueryable<Category> query, CategorySortOrder? sortOrder)
+    public static IQueryable<Category> ApplySortCategory(this IQueryable<Category> query, string? sortOrder)
     {
         switch (sortOrder)
         {
-            case CategorySortOrder.NameDesc:
-                return query.OrderByDescending(c => c.Name);
-            case CategorySortOrder.NameAsc:
+            case SortData.NameAsc:
                 return query.OrderBy(c => c.Name);
-            case CategorySortOrder.DisplayOrderAsc:
+            case SortData.NameDesc:
+                return query.OrderByDescending(c => c.Name);
+            case SortData.DisplayOrderAsc:
                 return query.OrderBy(c => c.DisplayOrder);
-            case CategorySortOrder.DisplayOrderDesc:
+            case SortData.DisplayOrderDesc:
                 return query.OrderByDescending(c => c.DisplayOrder);
-            case CategorySortOrder.CreatedAtAsc:
+            case SortData.CreatedAtAsc:
                 return query.OrderBy(c => c.CreatedAt);
-            case CategorySortOrder.CreatedAtDesc:
+            case SortData.CreatedAtDesc:
                 return query.OrderByDescending(c => c.CreatedAt);
             default:
                 return query.OrderBy(c => c.Id);
+        }
+    }
+
+    public static IQueryable<Product> ApplySortProduct(this IQueryable<Product> query, string? sortOrder)
+    {
+        switch (sortOrder)
+        {
+            case SortData.NameAsc:
+                return query.OrderBy(p => p.Name);
+            case SortData.NameDesc:
+                return query.OrderByDescending(p => p.Name);
+            case SortData.PriceAsc:
+                return query.OrderBy(p => p.Price);
+            case SortData.PriceDesc:
+                return query.OrderByDescending(p => p.Price);
+            case SortData.CreatedAtAsc:
+                return query.OrderBy(p => p.CreatedAt);
+            case SortData.CreatedAtDesc:
+                return query.OrderByDescending(p => p.CreatedAt);
+            default:
+                return query.OrderBy(p => p.Id);
         }
     }
 

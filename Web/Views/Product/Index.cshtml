@@ -11,6 +11,10 @@
     var searchString = Context.Request.Query["s"];
 
     var successMessage = TempData["SuccessMessage"];
+
+    var nameSortParam = ViewBag.NameSortParam;
+    var priceSortParam = ViewBag.PriceSortParam;
+    var createdAtParam = ViewBag.CreatedAtParam;
 }
 <section class="bg-body-tertiary mt-4 pb-3 rounded-bottom shadow-lg">
     <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Product List</h1>
@@ -40,9 +44,11 @@
                 <th scope="col" style="width: 10%">#</th>
                 <th scope="col">
                     Name
+                    <partial model="@nameSortParam" name="_SortColumn" />
                 </th>
                 <th scope="col">
                     Price
+                    <partial model="@priceSortParam" name="_SortColumn" />
                 </th>
                 <th scope="col">
                     Image
@@ -52,6 +58,7 @@
                 </th>
                 <th scope="col" style="width: 20%">
                     Created At
+                    <partial model="@createdAtParam" name="_SortColumn" />
                 </th>
                 <th scope="col" style="width: 20%">Actions</th>
             </tr>

@@ -2,7 +2,6 @@
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
 using Mvc.Utilities;
-using Mvc.Utilities.Enum;
 
 namespace Mvc.Controllers;
 
@@ -17,23 +16,23 @@ public class CategoryController : Controller
         _unitOfWork = unitOfWork;
     }
 
-    public IActionResult Index(int? page, string? s, CategorySortOrder? sortOrder)
+    public IActionResult Index(int? page, string? s, string? sortOrder)
     {
         var query = _unitOfWork.Category.GetAll().AsQueryable();
 
         // var query = _unitOfWork.CategoryRepository.Get(null, "DisplayOrder").AsQueryable();
 
-        ViewBag.NameSortParam = sortOrder == CategorySortOrder.NameAsc
-            ? CategorySortOrder.NameDesc
-            : CategorySortOrder.NameAsc;
+        ViewBag.NameSortParam = sortOrder == SortData.NameAsc
+            ? SortData.NameDesc
+            : SortData.NameAsc;
 
-        ViewBag.DisplayOrderSortParam = sortOrder == CategorySortOrder.DisplayOrderAsc
-            ? CategorySortOrder.DisplayOrderDesc
-            : CategorySortOrder.DisplayOrderAsc;
+        ViewBag.DisplayOrderSortParam = sortOrder == SortData.DisplayOrderAsc
+            ? SortData.DisplayOrderDesc
+            : SortData.DisplayOrderAsc;
 
-        ViewBag.CreatedAtParam = sortOrder == CategorySortOrder.CreatedAtAsc
-            ? CategorySortOrder.CreatedAtDesc
-            : CategorySortOrder.CreatedAtAsc;
+        ViewBag.CreatedAtParam = sortOrder == SortData.CreatedAtAsc
+            ? SortData.CreatedAtDesc
+            : SortData.CreatedAtAsc;
 
         query = query.ApplySortCategory(sortOrder);
 

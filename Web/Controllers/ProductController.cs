@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
+using Mvc.Utilities;
 
 namespace Mvc.Controllers;
 
@@ -18,12 +19,31 @@ public class ProductController : Controller
 
     [TempData] public string? SuccessMessage { get; set; }
 
-    public IActionResult Index(int? page)
+    public IActionResult Index(int? page, string? s, string? sortOrder)
     {
         var query = _unitOfWork.Product
             .GetAll(includeProperties: "Category")
-            .OrderBy(p => p.Id)
             .AsQueryable();
+
+        ViewBag.NameSortParam = sortOrder == SortData.NameAsc
+            ? SortData.NameDesc
+            : SortData.NameAsc;
+
+        ViewBag.PriceSortParam = sortOrder == SortData.PriceAsc
+            ? SortData.PriceDesc
+            : SortData.PriceAsc;
+
+        ViewBag.CreatedAtParam = sortOrder == SortData.CreatedAtAsc
+            ? SortData.CreatedAtDesc
+            : SortData.CreatedAtAsc;
+
+        query = query.ApplySortProduct(sortOrder);
+
+        if (!string.IsNullOrEmpty(s))
+        {
+            s = s.Trim();
+            query = query.Where(p => p.Name.Contains(s, StringComparison.OrdinalIgnoreCase));
+        }
 
         var pageNumber = page ?? 1;
         var recsCount = query.Count();
