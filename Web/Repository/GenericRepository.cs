@@ -32,13 +32,22 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return query;
     }
 
-    public IEnumerable<T> Get(Expression<Func<T, bool>>? filter, string? orderBy = null, bool isDescending = false)
+    public IEnumerable<T> Get(Expression<Func<T, bool>>? filter, string? includeProperties = null, string? orderBy = null, bool isDescending = false)
     {
         IQueryable<T> query = _dbSet.AsQueryable();
 
         if (filter != null)
         {
             query = query.Where(filter);
+        }
+
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            foreach (var includeProp in includeProperties
+                         .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProp);
+            }
         }
 
         if (!string.IsNullOrEmpty(orderBy))

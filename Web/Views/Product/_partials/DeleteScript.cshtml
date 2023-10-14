@@ -1,17 +1,4 @@
-﻿@* @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" })) *@
-@* { *@
-@*     @Html.AntiForgeryToken() *@
-@*     const form = $('#__AjaxAntiForgeryForm'); *@
-@*     const token = $('input[name="__RequestVerificationToken"]', form).val(); *@
-@*     $.ajax({ *@
-@*         type: 'POST', *@
-@*         url: `/Category/Delete/${categoryId}`, *@
-@*         data: { *@
-@*             __RequestVerificationToken: token *@
-@*         }, *@
-@* } *@
-
-@model Pager
+﻿@model Pager
 
 <form asp-action="Delete" id="deleteForm">
     <input type="hidden" value="@Model.CurrentPage" name="page">

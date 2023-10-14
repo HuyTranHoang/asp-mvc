@@ -7,36 +7,36 @@ namespace MVC.Repository;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _dbContext;
-    private GenericRepository<Category>? _categoryRepository;
-    private GenericRepository<Product>? _productRepository;
+    private GenericRepository<Category>? _category;
+    private GenericRepository<Product>? _product;
 
     public UnitOfWork(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public GenericRepository<Category> CategoryRepository
+    public GenericRepository<Category> Category
     {
         get
         {
-            if (_categoryRepository == null)
+            if (_category == null)
             {
-                _categoryRepository = new GenericRepository<Category>(_dbContext);
+                _category = new GenericRepository<Category>(_dbContext);
             }
-            return _categoryRepository;
+            return _category;
         }
     }
 
-    public GenericRepository<Product> ProductRepository
+    public GenericRepository<Product> Product
     {
         get
         {
-            if (_productRepository == null)
+            if (_product == null)
             {
-                _productRepository = new GenericRepository<Product>(_dbContext);
+                _product = new GenericRepository<Product>(_dbContext);
             }
 
-            return _productRepository;
+            return _product;
         }
     }
 

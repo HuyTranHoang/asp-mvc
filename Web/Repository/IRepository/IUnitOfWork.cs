@@ -4,7 +4,7 @@ namespace MVC.Repository.IRepository;
 
 public interface IUnitOfWork : IDisposable
 {
-    GenericRepository<Category> CategoryRepository { get; }
-    GenericRepository<Product> ProductRepository { get; }
+    GenericRepository<Category> Category { get; }
+    GenericRepository<Product> Product { get; }
     int Save();
 }

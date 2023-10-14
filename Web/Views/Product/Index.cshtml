@@ -62,7 +62,7 @@
                 <tr class="category-item">
                     <td>@index</td>
                     <td>@product.Name</td>
-                    <td>@product.Price</td>
+                    <td>@($"{product.Price,0:C0}")</td>
                     <td>
                         <img src="~/images/product/@product.ImageUrl" style="width: 75px" alt="Product image">
                     </td>

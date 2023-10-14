@@ -20,7 +20,7 @@ public class ProductController : Controller
 
     public IActionResult Index(int? page)
     {
-        var query = _unitOfWork.ProductRepository
+        var query = _unitOfWork.Product
             .GetAll(includeProperties: "Category")
             .OrderBy(p => p.Id)
             .AsQueryable();
@@ -45,7 +45,7 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        var product = _unitOfWork.ProductRepository.GetById(id);
+        var product = _unitOfWork.Product.GetById(id);
 
         if (product == null)
         {
@@ -57,7 +57,7 @@ public class ProductController : Controller
 
     public IActionResult Create()
     {
-        ViewData["CategoryId"] = new SelectList(_unitOfWork.CategoryRepository.GetAll(), "Id", "Name");
+        ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name");
         return View();
     }
 
@@ -84,7 +84,7 @@ public class ProductController : Controller
                 product.ImageUrl = fileName;
             }
 
-            _unitOfWork.ProductRepository.Insert(product);
+            _unitOfWork.Product.Insert(product);
             _unitOfWork.Save();
 
             SuccessMessage = "New product added";
@@ -92,7 +92,7 @@ public class ProductController : Controller
         }
 
         ViewData["CategoryId"] =
-            new SelectList(_unitOfWork.CategoryRepository.GetAll(), "Id", "Name", product.CategoryId);
+            new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
         return View("create", product);
     }
 
@@ -103,14 +103,14 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        var product = _unitOfWork.ProductRepository.GetById(id);
+        var product = _unitOfWork.Product.GetById(id);
         if (product == null)
         {
             return NotFound();
         }
 
         ViewData["CategoryId"] =
-            new SelectList(_unitOfWork.CategoryRepository.GetAll(), "Id", "Name", product.CategoryId);
+            new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
         return View(product);
     }
 
@@ -149,14 +149,14 @@ public class ProductController : Controller
                 product.ImageUrl = fileName;
             }
 
-            _unitOfWork.ProductRepository.Update(product);
+            _unitOfWork.Product.Update(product);
             _unitOfWork.Save();
             SuccessMessage = "Product updated";
             return RedirectToAction("Index");
         }
 
         ViewData["CategoryId"] =
-            new SelectList(_unitOfWork.CategoryRepository.GetAll(), "Id", "Name", product.CategoryId);
+            new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
         return View("edit", product);
     }
 
@@ -164,13 +164,13 @@ public class ProductController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Delete(int id, int? page)
     {
-        _unitOfWork.ProductRepository.Delete(id);
+        _unitOfWork.Product.Delete(id);
         if (_unitOfWork.Save() > 0)
         {
             SuccessMessage = "Product deleted";
         }
 
-        var products = _unitOfWork.ProductRepository.GetAll();
+        var products = _unitOfWork.Product.GetAll();
         var pageNumber = page ?? 1;
         if (!Pager.HasProductsOnPage(products, pageNumber))
         {

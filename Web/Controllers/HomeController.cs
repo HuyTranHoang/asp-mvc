@@ -1,21 +1,42 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
+using MVC.Repository.IRepository;
 
 namespace MVC.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IUnitOfWork unitOfWork, ILogger<HomeController> logger)
     {
+        _unitOfWork = unitOfWork;
         _logger = logger;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var products = _unitOfWork.Product.GetAll(includeProperties: "Category");
+        return View(products);
+    }
+
+    public IActionResult Details(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var product = _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Category").FirstOrDefault();
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        return View(product);
     }
 
     public IActionResult Privacy()
