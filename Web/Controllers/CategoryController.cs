@@ -35,10 +35,7 @@ public class CategoryController : Controller
             ? CategorySortOrder.CreatedAtDesc
             : CategorySortOrder.CreatedAtAsc;
 
-        if (sortOrder != null)
-        {
-            query = query.ApplySortCategory(sortOrder);
-        }
+        query = query.ApplySortCategory(sortOrder);
 
         if (!string.IsNullOrEmpty(s))
         {
@@ -67,7 +64,7 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Store(Category category)
+    public IActionResult Store([Bind("Id,Name, DisplayOrder")] Category category)
     {
         Validation(category);
 
@@ -95,6 +92,7 @@ public class CategoryController : Controller
         {
             return NotFound();
         }
+
         return View(category);
     }
 
@@ -120,14 +118,22 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, string? page)
+    public IActionResult Delete(int id, int? page)
     {
         _unitOfWork.CategoryRepository.Delete(id);
         if (_unitOfWork.Save() > 0)
         {
             SuccessMessage = "Category deleted";
         }
-        return RedirectToAction("Index", new { page });
+
+        var categories = _unitOfWork.CategoryRepository.GetAll();
+        var pageNumber = page ?? 1;
+        if (!Pager.HasProductsOnPage(categories, pageNumber))
+        {
+            pageNumber -= 1;
+        }
+
+        return RedirectToAction("Index", new { page = pageNumber });
     }
 
     private void Validation(Category category, bool isUpdate = false)

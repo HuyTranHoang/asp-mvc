@@ -44,6 +44,24 @@ public class Pager
 
         DisplayStartItem = (currentPage - 1) * pageSize + 1;
         DisplayEndItem = Math.Min(currentPage * pageSize, TotalItems);
+    }
 
+    public static bool HasProductsOnPage<T>(IEnumerable<T> t,int page, int pageSize = DefaultPageSize)
+    {
+        t = t.ToList();
+
+        var totalItems = t.Count();
+        var items = t.ToList();
+        var startItemIndex = (page - 1) * pageSize;
+        var endItemIndex = Math.Min(page * pageSize, totalItems);
+        for (var i = startItemIndex; i < endItemIndex; i++)
+        {
+            if (i < items.Count)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

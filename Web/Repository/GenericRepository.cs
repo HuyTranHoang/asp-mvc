@@ -29,7 +29,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             }
         }
 
-        return query.ToList();
+        return query;
     }
 
     public IEnumerable<T> Get(Expression<Func<T, bool>>? filter, string? orderBy = null, bool isDescending = false)
@@ -46,7 +46,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
             query = query.OrderByProperty(orderBy, isDescending);;
         }
 
-        return query.ToList();
+        return query;
     }
 
     public T? GetById(object id)

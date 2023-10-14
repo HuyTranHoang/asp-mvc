@@ -6,7 +6,7 @@
     var sortOrder = Context.Request.Query["sortOrder"];
 }
 
-@if (Model.TotalPages > 1)
+@if (Model.TotalPages > 0)
 {
     <nav aria-label="Page navigation" class="align-items-center d-flex flex-column">
         <ul class="justify-content-end pagination">
