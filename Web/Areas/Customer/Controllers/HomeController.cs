@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
 
-namespace Mvc.Controllers;
+namespace MVC.Areas.Customer.Controllers;
 
+[Area("Customer")]
 public class HomeController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;

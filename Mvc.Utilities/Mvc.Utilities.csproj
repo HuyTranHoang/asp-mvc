@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Mvc.Models\Mvc.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.23" />
+    </ItemGroup>
+
 </Project>

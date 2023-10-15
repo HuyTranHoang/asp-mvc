@@ -11,19 +11,23 @@
 @*         }, *@
 @* } *@
 
+@{
+    var controllerName = ViewData["ControllerName"] ?? "Home";
+}
+
 @model Pager
 
-<form asp-action="Delete" id="deleteForm">
+<form asp-controller="@controllerName" asp-action="Delete" id="deleteForm">
     <input type="hidden" value="@Model.CurrentPage" name="page">
 </form>
 
 <script >
         /*global Swal*/
         $(function () {
-            $('.delete-category').on('click', async function () {
+            $('.delete-button').on('click', async function () {
                 const form = $('#deleteForm');
-                const categoryId = $(this).data('id')
-                form.attr('action', `/Category/Delete/${categoryId}`)
+                const itemId = $(this).data('id')
+                form.attr('action', `/Admin/@controllerName/Delete/${itemId}`)
 
                 const result = await Swal.fire({
                   title: 'Are you sure?',

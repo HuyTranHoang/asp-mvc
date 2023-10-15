@@ -1,8 +1,8 @@
-@model IEnumerable<Product>
+﻿@model IEnumerable<Category>
 
 @{
-    ViewData["Title"] = "Product";
-    ViewData["ControllerName"] = "Product";
+    ViewData["Title"] = "Category";
+    ViewData["ControllerName"] = "Category";
 
     var index = 1;
 
@@ -13,11 +13,12 @@
     var successMessage = TempData["SuccessMessage"];
 
     var nameSortParam = ViewBag.NameSortParam;
-    var priceSortParam = ViewBag.PriceSortParam;
+    var displayOrderSortParam = ViewBag.DisplayOrderSortParam;
     var createdAtParam = ViewBag.CreatedAtParam;
 }
+
 <section class="bg-body-tertiary mt-4 pb-3 rounded-bottom shadow-lg">
-    <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Product List</h1>
+    <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Category List</h1>
 
     <div class="d-flex justify-content-between px-4 py-2">
         <div class="align-items-center d-flex">
@@ -33,7 +34,7 @@
             }
         </div>
         <a asp-action="Create" class="btn btn-primary text-decoration-none text-white">
-            <i class="fa-plus fa-regular"></i> Create new product
+            <i class="fa-plus fa-regular"></i> Create new category
         </a>
     </div>
 
@@ -46,15 +47,9 @@
                     Name
                     <partial model="@nameSortParam" name="_SortColumn" />
                 </th>
-                <th scope="col">
-                    Price
-                    <partial model="@priceSortParam" name="_SortColumn" />
-                </th>
-                <th scope="col">
-                    Image
-                </th>
-                <th scope="col">
-                    Category
+                <th scope="col" style="width: 15%">
+                    Display Order
+                    <partial model="@displayOrderSortParam" name="_SortColumn" />
                 </th>
                 <th scope="col" style="width: 20%">
                     Created At
@@ -64,24 +59,20 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var product in Model)
+            @foreach (var category in Model)
             {
                 <tr class="category-item">
                     <td>@index</td>
-                    <td>@product.Name</td>
-                    <td>@($"{product.Price,0:C0}")</td>
-                    <td>
-                        <img src="~/images/product/@product.ImageUrl" style="width: 75px" alt="Product image">
-                    </td>
-                    <td>@product.Category.Name</td>
-                    <td>@product.CreatedAt</td>
+                    <td>@category.Name</td>
+                    <td>@category.DisplayOrder</td>
+                    <td>@category.CreatedAt</td>
                     <td>
                         <div class="d-flex">
-                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                            <a asp-action="Edit" asp-route-id="@category.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
                                 <i class="fa-pen-to-square fa-regular"></i> Edit
                             </a>
 
-                            <button class="btn btn-danger delete-category fw-semibold px-4" data-id="@product.Id">
+                            <button class="btn btn-danger delete-button fw-semibold px-4" data-id="@category.Id">
                                 <i class="fa-regular fa-trash"></i> Delete
                             </button>
                         </div>
@@ -94,7 +85,7 @@
             @if (!Model.Any())
             {
                 <tr>
-                    <td class="text-center" colspan="7">No product found!</td>
+                    <td class="text-center" colspan="5">No category found!</td>
                 </tr>
             }
             </tbody>
@@ -106,5 +97,5 @@
 
 @section Scripts {
     <partial model="successMessage" name="_NotificationScriptsPartial" />
-    <partial model="pager" name="_partials/DeleteScript" />
+    <partial model="pager" name="_DeleteScript" />
 }
