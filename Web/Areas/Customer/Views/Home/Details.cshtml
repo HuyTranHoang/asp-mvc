@@ -6,7 +6,7 @@
     string priceFormat = $"{Model.Product.Price,0:C0}";
 }
 
-<h1>Details</h1>
+<h1>@ViewData["Title"]</h1>
 
 <form asp-action="Details">
     <input asp-for="ProductId" type="hidden">
@@ -24,13 +24,13 @@
             <p class="fs-3 mt-3 text-success">@priceFormat</p>
 
             <div class="align-items-center d-flex">
-                <label class="pe-5" for="quantity">Quantity:</label>
+                <label class="pe-5 fs-5" asp-for="Quantity"></label>
                 <div class="input-group" style="width: 130px;">
-                    <a class="input-group-text text-decoration-none" onclick="quantityMinus()">
+                    <a class="input-group-text text-decoration-none" style="cursor: pointer" onclick="quantityMinus()">
                         <i class="fa-light fa-minus"></i>
                     </a>
                     <input asp-for="Quantity" class="form-control fw-semibold" onblur="validateInput()">
-                    <a class="input-group-text text-decoration-none" onclick="quantityPlus()">
+                    <a class="input-group-text text-decoration-none" style="cursor: pointer" onclick="quantityPlus()">
                         <i class="fa-light fa-plus"></i>
                     </a>
                 </div>

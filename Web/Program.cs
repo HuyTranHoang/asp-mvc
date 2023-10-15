@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     var connectString = builder.Configuration.GetConnectionString("dbContext");
@@ -25,6 +25,14 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Identity/Account/Login";
     options.LogoutPath = "/Identity/Account/Logout";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -51,6 +59,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllerRoute(

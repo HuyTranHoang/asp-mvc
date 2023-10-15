@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
+using Mvc.Utilities;
 
 namespace MVC.Areas.Customer.Controllers;
 
@@ -67,11 +68,12 @@ public class HomeController : Controller
         else
         {
             _unitOfWork.ShoppingCart.Insert(shoppingCart);
-
         }
 
         _unitOfWork.Save();
-
+        HttpContext.Session.SetInt32(SD.SessionCart,
+            _unitOfWork.ShoppingCart.Get(u => u.IdentityUserId == userId).Count()
+        );
         SuccessMessage = "Add to cart successfully!";
         return RedirectToAction(nameof(Index));
     }
