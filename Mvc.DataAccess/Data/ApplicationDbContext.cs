@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
     public DbSet<Category> Categories { get; set; } = default!;
     public DbSet<Product> Products { get; set; } = default!;
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

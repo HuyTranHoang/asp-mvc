@@ -1,58 +1,73 @@
-@model Product
+@model ShoppingCart
 
 @{
     ViewData["Title"] = "Details";
 
-    string priceFormat = $"{Model.Price,0:C0}";
+    string priceFormat = $"{Model.Product.Price,0:C0}";
 }
 
 <h1>Details</h1>
 
-<div>
+<form asp-action="Details">
+    <input asp-for="ProductId" type="hidden">
     <a asp-action="Index" class="btn btn-outline-primary my-3">Back to home</a>
     <div class="row">
         <div class="col-4">
             <div class="image-wrapper-details m-0 rounded">
-                <img alt="@Model.ImageUrl" src="~/images/product/@Model.ImageUrl">
+                <img alt="@Model.Product.ImageUrl" src="~/images/product/@Model.Product.ImageUrl">
             </div>
         </div>
         <div class="col-7 offset-1">
-            <h2 class="mb-3">@Model.Name</h2>
-            <span class="category-label">@Model.Category.Name</span>
+            <h2 class="mb-3">@Model.Product.Name</h2>
+            <span class="category-label">@Model.Product.Category.Name</span>
 
-            <p class="mt-3 fs-3 text-success">@priceFormat</p>
+            <p class="fs-3 mt-3 text-success">@priceFormat</p>
 
             <div class="align-items-center d-flex">
                 <label class="pe-5" for="quantity">Quantity:</label>
                 <div class="input-group" style="width: 130px;">
-                    <button class="input-group-text" onclick="quantityMinus()"><i class="fa-light fa-minus"></i></button>
-                    <input class="form-control fw-semibold" id="quantity" name="quantity" type="text" value="1">
-                    <button class="input-group-text" onclick="quantityPlus()"><i class="fa-light fa-plus"></i></button>
+                    <a class="input-group-text text-decoration-none" onclick="quantityMinus()">
+                        <i class="fa-light fa-minus"></i>
+                    </a>
+                    <input asp-for="Quantity" class="form-control fw-semibold" onblur="validateInput()">
+                    <a class="input-group-text text-decoration-none" onclick="quantityPlus()">
+                        <i class="fa-light fa-plus"></i>
+                    </a>
                 </div>
             </div>
 
-            <p class="mt-3">@Model.Description</p>
+            <p class="mt-3">@Model.Product.Description</p>
 
-            <button class="btn btn-secondary">Add to cart (Coming soon)</button>
+            <button type="submit" class="bg-gradient btn btn-secondary fw-semibold py-2 text-uppercase">Add to cart</button>
 
         </div>
     </div>
-</div>
+</form>
 
 @section Scripts {
     <script>
+    const quantity = $("#Quantity");
+
     function quantityPlus() {
-        const quantity = $("#quantity");
         const curQuantity = quantity.val()
         quantity.val(+curQuantity + 1)
     }
 
     function quantityMinus() {
-        const quantity = $("#quantity");
         const curQuantity = quantity.val()
         if (curQuantity > 1) {
             quantity.val(+curQuantity - 1)
         }
+    }
+
+    function validateInput() {
+        const curQuantity = quantity.val()
+
+        if (curQuantity < 0)
+            quantity.val(1)
+
+        if (curQuantity > 999)
+            quantity.val(999)
     }
     </script>
 }

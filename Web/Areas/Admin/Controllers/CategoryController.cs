@@ -76,7 +76,7 @@ public class CategoryController : Controller
             _unitOfWork.Save();
 
             SuccessMessage = "New category added";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         return View("create");
@@ -112,7 +112,7 @@ public class CategoryController : Controller
             _unitOfWork.Category.Update(category);
             _unitOfWork.Save();
             SuccessMessage = "Product updated";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         return View("edit", category);
@@ -135,7 +135,7 @@ public class CategoryController : Controller
             pageNumber -= 1;
         }
 
-        return RedirectToAction("Index", new { page = pageNumber });
+        return RedirectToAction(nameof(Index), new { page = pageNumber });
     }
 
     private void Validation(Category category, bool isUpdate = false)

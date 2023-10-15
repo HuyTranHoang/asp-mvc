@@ -31,7 +31,7 @@
                         <a class="nav-link @(returnUrl == "/" ? "active": "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @(returnUrl == "/Home/Privacy" ? "active": "")" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link @(returnUrl.Contains("/Privacy") ? "active": "")" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
 
                     @if (User.IsInRole(SD.RoleAdmin))
@@ -44,6 +44,11 @@
                         </li>
                     }
 
+                    <li class="nav-item">
+                        <a class="nav-link @(returnUrl.Contains("/Cart") ? "active" : "")" asp-area="" asp-controller="Cart" asp-action="Index">
+                            <i class="fa-light fa-cart-shopping"></i> (0)
+                        </a>
+                    </li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

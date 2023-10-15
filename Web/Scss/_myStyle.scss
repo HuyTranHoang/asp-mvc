@@ -1,5 +1,18 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
+
+//Remove up down arrrow in input type number
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+//
+
 h1 {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var successMessage = TempData["SuccessMessage"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -9,20 +10,24 @@
 <p>List of all products</p>
 
 <div class="g-4 row row-cols-2 row-cols-md-5">
-     @foreach (var product in Model)
-     {
-         <div class="col mb-4">
-             <div class="card bg-body-tertiary card-hover h-100 shadow rounded-0">
-                 <div class="image-wrapper m-0">
-                     <img alt="@product.ImageUrl" src="~/images/product/@product.ImageUrl">
-                 </div>
-                 <div class="card-body d-flex flex-column">
-                     <h5 class="card-title text-ellipsis" style="min-height: 48px">@product.Name</h5>
-                     <p class="text-muted small"><i class="fa-solid fa-tag"></i> @product.Category.Name</p>
-                     <p class="fw-semibold text-success mt-auto mb-0">@($"{product.Price,0:C0}")</p>
-                 </div>
-                 <a asp-action="Details" asp-route-id="@product.Id" class="details-label text-decoration-none">Details</a>
-             </div>
-         </div>
-     }
+    @foreach (var product in Model)
+    {
+        <div class="col mb-4">
+            <div class="card bg-body-tertiary card-hover h-100 shadow rounded-0">
+                <div class="image-wrapper m-0">
+                    <img alt="@product.ImageUrl" src="~/images/product/@product.ImageUrl">
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-ellipsis" style="min-height: 48px">@product.Name</h5>
+                    <p class="text-muted small"><i class="fa-solid fa-tag"></i> @product.Category.Name</p>
+                    <p class="fw-semibold text-success mt-auto mb-0">@($"{product.Price,0:C0}")</p>
+                </div>
+                <a asp-action="Details" asp-route-id="@product.Id" class="details-label text-decoration-none">Details</a>
+            </div>
+        </div>
+    }
 </div>
+
+@section Scripts {
+    <partial model="successMessage" name="_ToastScriptsPartial" />
+}

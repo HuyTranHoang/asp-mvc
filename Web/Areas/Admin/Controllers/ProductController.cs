@@ -110,7 +110,7 @@ public class ProductController : Controller
             _unitOfWork.Save();
 
             SuccessMessage = "New product added";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         ViewData["CategoryId"] =
@@ -174,7 +174,7 @@ public class ProductController : Controller
             _unitOfWork.Product.Update(product);
             _unitOfWork.Save();
             SuccessMessage = "Product updated";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         ViewData["CategoryId"] =
@@ -199,6 +199,6 @@ public class ProductController : Controller
             pageNumber -= 1;
         }
 
-        return RedirectToAction("Index", new { page = pageNumber });
+        return RedirectToAction(nameof(Index), new { page = pageNumber });
     }
 }

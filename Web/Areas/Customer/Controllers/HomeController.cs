@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
@@ -11,11 +13,14 @@ public class HomeController : Controller
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<HomeController> _logger;
 
+    [TempData] public string? SuccessMessage { get; set; }
+
     public HomeController(IUnitOfWork unitOfWork, ILogger<HomeController> logger)
     {
         _unitOfWork = unitOfWork;
         _logger = logger;
     }
+
 
     public IActionResult Index()
     {
@@ -23,21 +28,52 @@ public class HomeController : Controller
         return View(products);
     }
 
-    public IActionResult Details(int? id)
+    public IActionResult Details(int id)
     {
-        if (id == null)
+        var shoppingCart = new ShoppingCart
+        {
+            Product = _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Category").FirstOrDefault(),
+            ProductId = id,
+            Quantity = 1
+        };
+
+        if (shoppingCart.Product == null)
         {
             return NotFound();
         }
 
-        var product = _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Category").FirstOrDefault();
+        return View(shoppingCart);
+    }
 
-        if (product == null)
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public IActionResult Details([Bind("ProductId, Quantity")] ShoppingCart shoppingCart)
+    {
+        var claimsIdentity = (ClaimsIdentity)User.Identity!;
+        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        shoppingCart.IdentityUserId = userId;
+
+        var cartFromDb = _unitOfWork.ShoppingCart
+                .Get(u => u.IdentityUserId == userId && u.ProductId == shoppingCart.ProductId)
+                .FirstOrDefault();
+
+        if (cartFromDb != null)
         {
-            return NotFound();
+            cartFromDb.Quantity += shoppingCart.Quantity;
+            _unitOfWork.ShoppingCart.Update(cartFromDb);
+        }
+        else
+        {
+            _unitOfWork.ShoppingCart.Insert(shoppingCart);
+
         }
 
-        return View(product);
+        _unitOfWork.Save();
+
+        SuccessMessage = "Add to cart successfully!";
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Privacy()

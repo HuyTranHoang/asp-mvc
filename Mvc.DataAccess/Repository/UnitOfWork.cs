@@ -1,4 +1,5 @@
-﻿using Mvc.DataAccess.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Mvc.DataAccess.Data;
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
 
@@ -9,6 +10,8 @@ public class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _dbContext;
     private GenericRepository<Category>? _category;
     private GenericRepository<Product>? _product;
+    private GenericRepository<ShoppingCart>? _shoppingCart;
+    private GenericRepository<IdentityUser>? _identityUser;
 
     public UnitOfWork(ApplicationDbContext dbContext)
     {
@@ -23,6 +26,7 @@ public class UnitOfWork : IUnitOfWork
             {
                 _category = new GenericRepository<Category>(_dbContext);
             }
+
             return _category;
         }
     }
@@ -37,6 +41,32 @@ public class UnitOfWork : IUnitOfWork
             }
 
             return _product;
+        }
+    }
+
+    public GenericRepository<ShoppingCart> ShoppingCart
+    {
+        get
+        {
+            if (_shoppingCart == null)
+            {
+                _shoppingCart = new GenericRepository<ShoppingCart>(_dbContext);
+            }
+
+            return _shoppingCart;
+        }
+    }
+
+    public GenericRepository<IdentityUser> IdentityUser
+    {
+        get
+        {
+            if (_identityUser == null)
+            {
+                _identityUser = new GenericRepository<IdentityUser>(_dbContext);
+            }
+
+            return _identityUser;
         }
     }
 
