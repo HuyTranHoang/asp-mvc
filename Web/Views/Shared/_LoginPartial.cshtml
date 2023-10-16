@@ -25,10 +25,16 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link @(returnUrl.Contains("/Register") ? "active": "")" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="nav-link @(returnUrl.Contains("/Register") ? "active" : "")" id="register" asp-area="Identity" asp-page="/Account/Register">
+            Register
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(returnUrl.Contains("/Login") ? "active": "")" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="nav-link @(returnUrl.Contains("/Login") ? "active" : "") icon-swap" id="login" asp-area="Identity" asp-page="/Account/Login">
+            <i class="fa-light fa-right-to-bracket init-icon"></i>
+            <i class="fa-light fa-person-to-portal second-icon"></i>
+            Login
+        </a>
     </li>
 }
 </ul>

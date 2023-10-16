@@ -22,7 +22,7 @@
                     <p class="text-muted small"><i class="fa-solid fa-tag"></i> @product.Category.Name</p>
                     <p class="fw-semibold text-success mt-auto mb-0">@($"{product.Price,0:C0}")</p>
                 </div>
-                <a asp-action="Details" asp-route-id="@product.Id" class="details-label text-decoration-none">Details</a>
+                <a asp-action="Details" asp-route-id="@product.Id" class="details-label bg-gradient text-decoration-none">Details</a>
             </div>
         </div>
     }

@@ -29,4 +29,12 @@ public class Product
     [ForeignKey("CategoryId")]
     [ValidateNever]
     public Category Category { get; set; }
+
+    public int CoverTypeId { get; set; }
+
+    [ForeignKey("CoverTypeId")]
+    [ValidateNever]
+    public CoverType CoverType { get; set; }
+
+
 }

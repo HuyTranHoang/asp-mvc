@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Mvc.Utilities;
 
 namespace MVC.Areas.Identity.Pages.Account
 {
@@ -29,6 +30,7 @@ namespace MVC.Areas.Identity.Pages.Account
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
+                HttpContext.Session.SetInt32(SD.SessionCart,0);
                 return LocalRedirect(returnUrl);
             }
             else

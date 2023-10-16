@@ -12,6 +12,7 @@ public class UnitOfWork : IUnitOfWork
     private GenericRepository<Product>? _product;
     private GenericRepository<ShoppingCart>? _shoppingCart;
     private GenericRepository<IdentityUser>? _identityUser;
+    private GenericRepository<CoverType>? _coverType;
 
     public UnitOfWork(ApplicationDbContext dbContext)
     {
@@ -67,6 +68,19 @@ public class UnitOfWork : IUnitOfWork
             }
 
             return _identityUser;
+        }
+    }
+
+    public GenericRepository<CoverType> CoverType
+    {
+        get
+        {
+            if (_coverType == null)
+            {
+                _coverType = new GenericRepository<CoverType>(_dbContext);
+            }
+
+            return _coverType;
         }
     }
 

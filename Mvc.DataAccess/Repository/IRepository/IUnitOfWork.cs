@@ -9,5 +9,6 @@ public interface IUnitOfWork : IDisposable
     GenericRepository<Product> Product { get; }
     GenericRepository<ShoppingCart> ShoppingCart { get; }
     GenericRepository<IdentityUser> IdentityUser { get; }
+    GenericRepository<CoverType> CoverType { get; }
     int Save();
 }
