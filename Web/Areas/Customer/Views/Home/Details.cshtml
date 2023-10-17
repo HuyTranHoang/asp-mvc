@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Details";
 
-    string priceFormat = $"{Model.Product.Price,0:C0}";
-    string priceFormat50 = $"{Model.Product.Price50,0:C0}";
-    string priceFormat100 = $"{Model.Product.Price100,0:C0}";
+    var priceFormat = $"{Model.Product.Price,0:C0}";
+    var priceFormat50 = $"{Model.Product.Price50,0:C0}";
+    var priceFormat100 = $"{Model.Product.Price100,0:C0}";
 }
 
 <h1>@ViewData["Title"]</h1>

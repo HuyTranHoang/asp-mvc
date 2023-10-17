@@ -187,9 +187,18 @@ public class ProductController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Delete(int id, int? page)
     {
+        var product = _unitOfWork.Product.GetById(id);
         _unitOfWork.Product.Delete(id);
         if (_unitOfWork.Save() > 0)
         {
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            var productPath = Path.Combine(wwwRootPath, "images/product");
+
+            var oldImagePath = Path.Combine(productPath, product.ImageUrl);
+            if (System.IO.File.Exists(oldImagePath) && product.ImageUrl != "default.jpg")
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
             SuccessMessage = "Product deleted";
         }
 
