@@ -1,8 +1,8 @@
-@model IEnumerable<Product>
+@model IEnumerable<CoverType>
 
 @{
-    ViewData["Title"] = "Product";
-    ViewData["ControllerName"] = "Product";
+    ViewData["Title"] = "CoverType";
+    ViewData["ControllerName"] = "CoverType";
 
     var index = 1;
 
@@ -12,12 +12,10 @@
 
     var successMessage = TempData["SuccessMessage"];
 
-    var nameSortParam = ViewBag.NameSortParam;
-    var priceSortParam = ViewBag.PriceSortParam;
-    var createdAtParam = ViewBag.CreatedAtParam;
 }
+
 <section class="bg-body-tertiary mt-4 pb-3 rounded-bottom shadow-lg">
-    <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Product List</h1>
+    <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Cover Type List</h1>
 
     <div class="d-flex justify-content-between px-4 py-2">
         <div class="align-items-center d-flex">
@@ -33,7 +31,7 @@
             }
         </div>
         <a asp-action="Create" class="btn btn-primary text-decoration-none text-white">
-            <i class="fa-plus fa-regular"></i> Create new product
+            <i class="fa-plus fa-regular"></i> Create new category
         </a>
     </div>
 
@@ -44,44 +42,28 @@
                 <th scope="col" style="width: 5%">#</th>
                 <th scope="col">
                     Name
-                    <partial model="@nameSortParam" name="_SortColumn" />
                 </th>
-                <th scope="col" style="width: 10%">
-                    Price
-                    <partial model="@priceSortParam" name="_SortColumn" />
-                </th>
-                <th scope="col">
-                    Image
-                </th>
-                <th scope="col" style="width: 10%">
-                    Category
-                </th>
-                <th scope="col" style="width: 15%">
+
+                <th scope="col" style="width: 20%">
                     Created At
-                    <partial model="@createdAtParam" name="_SortColumn" />
                 </th>
                 <th scope="col" style="width: 20%">Actions</th>
             </tr>
             </thead>
             <tbody>
-            @foreach (var product in Model)
+            @foreach (var coverType in Model)
             {
                 <tr>
                     <td>@index</td>
-                    <td>@product.Name</td>
-                    <td>@($"{product.Price,0:C0}")</td>
-                    <td>
-                        <img src="~/images/product/@product.ImageUrl" style="width: 75px" alt="Product image">
-                    </td>
-                    <td>@product.Category.Name</td>
-                    <td>@product.CreatedAt</td>
+                    <td>@coverType.Name</td>
+                    <td>@coverType.CreatedAt</td>
                     <td>
                         <div class="d-flex">
-                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                            <a asp-action="Edit" asp-route-id="@coverType.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
                                 <i class="fa-pen-to-square fa-regular"></i> Edit
                             </a>
 
-                            <button class="btn btn-danger delete-button fw-semibold px-4" data-id="@product.Id">
+                            <button class="btn btn-danger delete-button fw-semibold px-4" data-id="@coverType.Id">
                                 <i class="fa-regular fa-trash"></i> Delete
                             </button>
                         </div>
@@ -94,7 +76,7 @@
             @if (!Model.Any())
             {
                 <tr>
-                    <td class="text-center" colspan="7">No product found!</td>
+                    <td class="text-center" colspan="5">No cover type found!</td>
                 </tr>
             }
             </tbody>

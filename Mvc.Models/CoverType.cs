@@ -12,4 +12,6 @@ public class CoverType
     [MaxLength(50)]
     [DisplayName("Cover type")]
     public string Name { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }

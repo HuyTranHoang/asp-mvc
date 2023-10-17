@@ -81,13 +81,14 @@ public class ProductController : Controller
     public IActionResult Create()
     {
         ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name");
+        ViewData["CoverTypeId"] = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name");
         return View();
     }
 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Store([Bind("Name,Price,Description,CategoryId")] Product product,
+    public IActionResult Store([Bind("Name,Author,ISBN,Price,Price50,Price100,Description,CategoryId,CoverTypeId")] Product product,
         IFormFile? file)
     {
         if (ModelState.IsValid)
@@ -113,8 +114,8 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewData["CategoryId"] =
-            new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
+        ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
+        ViewData["CoverTypeId"] = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name", product.CoverTypeId);
         return View("create", product);
     }
 
@@ -131,15 +132,15 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        ViewData["CategoryId"] =
-            new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
+        ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
+        ViewData["CoverTypeId"] = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name", product.CoverTypeId);
         return View(product);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Update(int id,
-        [Bind("Id,Name,Price,Description,ImageUrl,CategoryId")]
+        [Bind("Id,Name,Author,ISBN,Price,Price50,Price100,Description,CategoryId,CoverTypeId")]
         Product product,
         IFormFile? file)
     {

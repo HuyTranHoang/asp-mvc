@@ -25,7 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var products = _unitOfWork.Product.GetAll(includeProperties: "Category");
+        var products = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
         return View(products);
     }
 
@@ -33,7 +33,7 @@ public class HomeController : Controller
     {
         var shoppingCart = new ShoppingCart
         {
-            Product = _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Category").FirstOrDefault(),
+            Product = _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Category,CoverType").FirstOrDefault(),
             ProductId = id,
             Quantity = 1
         };

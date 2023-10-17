@@ -15,7 +15,7 @@ public class ShoppingCart
     [ValidateNever]
     public Product Product { get; set; }
 
-    [DisplayName("Quantity: ")]
+    [DisplayName("Count: ")]
     [Range(1, 999, ErrorMessage = "Please enter a value beetween 1 and 999")]
     public int Quantity { get; set; }
 
@@ -24,6 +24,6 @@ public class ShoppingCart
     [ValidateNever]
     public IdentityUser IdentityUser { get; set; }
 
-    // [NotMapped]
-    // public double Price { get; set; }
+    [NotMapped]
+    public double Price { get; set; }
 }

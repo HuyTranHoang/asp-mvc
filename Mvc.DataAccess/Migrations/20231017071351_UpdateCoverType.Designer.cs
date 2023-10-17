@@ -12,8 +12,8 @@ using Mvc.DataAccess.Data;
 namespace Mvc.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231016141939_UpdateProductAndAddFKWithCoverType")]
-    partial class UpdateProductAndAddFKWithCoverType
+    [Migration("20231017071351_UpdateCoverType")]
+    partial class UpdateCoverType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -243,6 +243,57 @@ namespace Mvc.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 13, 51, 358, DateTimeKind.Local).AddTicks(246),
+                            DisplayOrder = 1,
+                            Name = "Manga"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 13, 51, 358, DateTimeKind.Local).AddTicks(254),
+                            DisplayOrder = 2,
+                            Name = "Romance"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 13, 51, 358, DateTimeKind.Local).AddTicks(255),
+                            DisplayOrder = 3,
+                            Name = "Fiction"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 13, 51, 358, DateTimeKind.Local).AddTicks(256),
+                            DisplayOrder = 4,
+                            Name = "Programming"
+                        });
+                });
+
+            modelBuilder.Entity("Mvc.Models.CoverType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CoverTypes");
                 });
 
             modelBuilder.Entity("Mvc.Models.Product", b =>
@@ -253,13 +304,24 @@ namespace Mvc.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CoverTypeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISBN")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -274,9 +336,17 @@ namespace Mvc.DataAccess.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<double?>("Price100")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Price50")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CoverTypeId");
 
                     b.ToTable("Products");
                 });
@@ -305,7 +375,7 @@ namespace Mvc.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -367,7 +437,15 @@ namespace Mvc.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Mvc.Models.CoverType", "CoverType")
+                        .WithMany()
+                        .HasForeignKey("CoverTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("CoverType");
                 });
 
             modelBuilder.Entity("Mvc.Models.ShoppingCart", b =>

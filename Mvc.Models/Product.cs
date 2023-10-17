@@ -14,27 +14,30 @@ public class Product
 
     [Required]
     public double Price { get; set; }
+    public double? Price50 { get; set; }
+    public double? Price100 { get; set; }
 
     public string Description { get; set; } = "";
+
+    [Required] public string ISBN { get; set; } = "";
+
+    [Required] public string Author { get; set; } = "";
 
     [DisplayName("Image")]
     public string ImageUrl { get; set; } = "default.jpg";
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-    [Required(ErrorMessage = "Select a category")]
     [DisplayName("Category")]
     public int CategoryId { get; set; }
-
     [ForeignKey("CategoryId")]
     [ValidateNever]
     public Category Category { get; set; }
 
+    [DisplayName("Cover type")]
     public int CoverTypeId { get; set; }
-
     [ForeignKey("CoverTypeId")]
     [ValidateNever]
     public CoverType CoverType { get; set; }
-
 
 }

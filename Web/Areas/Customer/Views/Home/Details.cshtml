@@ -4,6 +4,8 @@
     ViewData["Title"] = "Details";
 
     string priceFormat = $"{Model.Product.Price,0:C0}";
+    string priceFormat50 = $"{Model.Product.Price50,0:C0}";
+    string priceFormat100 = $"{Model.Product.Price100,0:C0}";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -18,19 +20,50 @@
             </div>
         </div>
         <div class="col-7 offset-1">
-            <h2 class="mb-3 text-gradient">@Model.Product.Name</h2>
+            <h2 class="text-gradient">@Model.Product.Name</h2>
+            <h5 class="mb-3">by @Model.Product.Author</h5>
             <span class="category-label">@Model.Product.Category.Name</span>
+            <span class="category-label">@Model.Product.CoverType.Name</span>
 
-            <p class="fs-3 mt-3 text-success">@priceFormat</p>
+            <div class="fw-semibold mt-3 row text-muted">
+                <div class="col-3 pe-0">
+                    <p class="border-bottom mb-0 pb-2">Quantity</p>
+                </div>
+                <div class="col-3 p-0">
+                    <p class="border-bottom mb-0 pb-2">1-50</p>
+                </div>
+                <div class="col-3 p-0">
+                    <p class="border-bottom mb-0 pb-2">51-100</p>
+                </div>
+                <div class="col-3 ps-0">
+                    <p class="border-bottom mb-0 ">100+</p>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <div class="col-3 fs-3 text-success pe-0">
+                    Price
+                </div>
+                <div class="col-3 fs-3 text-success p-0">
+                    @priceFormat
+                </div>
+                <div class="col-3 fs-3 text-success p-0">
+                    @priceFormat50
+                </div>
+                <div class="col-3 fs-3 text-success ps-0">
+                    @priceFormat100
+                </div>
+            </div>
+
 
             <div class="align-items-center d-flex">
-                <label class="pe-5 fs-5" asp-for="Quantity"></label>
+                <label asp-for="Quantity" class="fs-5 pe-5"></label>
                 <div class="input-group" style="width: 130px;">
-                    <a class="input-group-text text-decoration-none" style="cursor: pointer" onclick="quantityMinus()">
+                    <a class="input-group-text text-decoration-none" onclick="quantityMinus()" style="cursor: pointer">
                         <i class="fa-light fa-minus"></i>
                     </a>
                     <input asp-for="Quantity" class="form-control fw-semibold" onblur="validateInput()">
-                    <a class="input-group-text text-decoration-none" style="cursor: pointer" onclick="quantityPlus()">
+                    <a class="input-group-text text-decoration-none" onclick="quantityPlus()" style="cursor: pointer">
                         <i class="fa-light fa-plus"></i>
                     </a>
                 </div>
@@ -38,7 +71,9 @@
 
             <p class="mt-3">@Model.Product.Description</p>
 
-            <button type="submit" class="bg-gradient btn btn-secondary fw-semibold py-2 text-uppercase">Add to cart</button>
+            <p>ISBN: @Model.Product.ISBN</p>
+
+            <button class="bg-gradient btn btn-secondary fw-semibold py-2 text-uppercase" type="submit">Add to cart</button>
 
         </div>
     </div>

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.DataAccess.Repository.IRepository;
+using Mvc.Models;
 using Mvc.Utilities;
 using MVC.ViewModels;
 
@@ -32,7 +33,8 @@ public class CartController : Controller
 
         foreach (var cart in ShoppingCartVM.ShoppingCartList)
         {
-            ShoppingCartVM.OrderTotal += cart.Quantity * cart.Product.Price;
+            cart.Price = GetPriceBasedOnquantity(cart);
+            ShoppingCartVM.OrderTotal += cart.Quantity * cart.Price;
         }
 
         return View(ShoppingCartVM);
@@ -78,6 +80,22 @@ public class CartController : Controller
                 _unitOfWork.ShoppingCart.Get(u => u.IdentityUserId == userId).Count());
             return RedirectToAction(nameof(Index));
         }
+
         return NotFound();
+    }
+
+    private double GetPriceBasedOnquantity(ShoppingCart shoppingCart)
+    {
+        if (shoppingCart.Quantity <= 50)
+        {
+            return shoppingCart.Product.Price;
+        }
+
+        if (shoppingCart.Quantity <= 100)
+        {
+            return shoppingCart.Product.Price50 ?? shoppingCart.Product.Price;
+        }
+
+        return shoppingCart.Product.Price100 ?? shoppingCart.Product.Price;
     }
 }

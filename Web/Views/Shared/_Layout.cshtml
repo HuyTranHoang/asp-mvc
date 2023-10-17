@@ -39,11 +39,21 @@
 
                     @if (User.IsInRole(SD.RoleAdmin))
                     {
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-area="Admin" asp-controller="Category" class="nav-link @(returnUrl.Contains("/Category") ? "active" : "")">Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Index" asp-area="Admin" asp-controller="Product" class="nav-link @(returnUrl.Contains("/Product") ? "active" : "")">Product</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle @(returnUrl.Contains("/Admin") ? "active" : "")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Content Management
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a asp-action="Index" asp-area="Admin" asp-controller="Category" class="dropdown-item">Category</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Index" asp-area="Admin" asp-controller="Product" class="dropdown-item">Product</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Index" asp-area="Admin" asp-controller="CoverType" class="dropdown-item">Cover Type</a>
+                                </li>
+                            </ul>
                         </li>
                     }
 

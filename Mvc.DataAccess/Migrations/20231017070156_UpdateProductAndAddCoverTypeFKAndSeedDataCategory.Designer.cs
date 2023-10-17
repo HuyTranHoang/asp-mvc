@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mvc.DataAccess.Data;
 
 #nullable disable
 
-namespace MVC.Migrations
+namespace Mvc.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231017070156_UpdateProductAndAddCoverTypeFKAndSeedDataCategory")]
+    partial class UpdateProductAndAddCoverTypeFKAndSeedDataCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,28 +248,28 @@ namespace MVC.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 17, 2, 40, 50, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 1, 55, 884, DateTimeKind.Local).AddTicks(9996),
                             DisplayOrder = 1,
                             Name = "Manga"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 17, 3, 44, 12, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 1, 55, 885, DateTimeKind.Local).AddTicks(5),
                             DisplayOrder = 2,
                             Name = "Romance"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2023, 10, 17, 4, 55, 23, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 1, 55, 885, DateTimeKind.Local).AddTicks(6),
                             DisplayOrder = 3,
                             Name = "Fiction"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2023, 10, 17, 5, 22, 34, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2023, 10, 17, 14, 1, 55, 885, DateTimeKind.Local).AddTicks(6),
                             DisplayOrder = 4,
                             Name = "Programming"
                         });
@@ -281,9 +283,6 @@ namespace MVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -292,26 +291,6 @@ namespace MVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CoverTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2023, 10, 17, 2, 40, 50, 0, DateTimeKind.Unspecified),
-                            Name = "Softcover"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2023, 10, 17, 3, 40, 50, 0, DateTimeKind.Unspecified),
-                            Name = "Paperback"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(2023, 10, 17, 4, 40, 50, 0, DateTimeKind.Unspecified),
-                            Name = "Hardcover"
-                        });
                 });
 
             modelBuilder.Entity("Mvc.Models.Product", b =>
