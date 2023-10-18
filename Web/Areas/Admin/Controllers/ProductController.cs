@@ -20,7 +20,7 @@ public class ProductController : Controller
         _webHostEnvironment = webHostEnvironment;
     }
 
-    [TempData] public string? SuccessMessage { get; set; }
+    [TempData] public string? SuccessMessage { private get; set; }
 
     public IActionResult Index(int? page, string? s, string? sortOrder)
     {
@@ -178,8 +178,8 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewData["CategoryId"] =
-            new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
+        ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
+        ViewData["CoverTypeId"] = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name", product.CoverTypeId);
         return View("edit", product);
     }
 
@@ -194,7 +194,7 @@ public class ProductController : Controller
             var wwwRootPath = _webHostEnvironment.WebRootPath;
             var productPath = Path.Combine(wwwRootPath, "images/product");
 
-            var oldImagePath = Path.Combine(productPath, product.ImageUrl);
+            var oldImagePath = Path.Combine(productPath, product!.ImageUrl);
             if (System.IO.File.Exists(oldImagePath) && product.ImageUrl != "default.jpg")
             {
                 System.IO.File.Delete(oldImagePath);

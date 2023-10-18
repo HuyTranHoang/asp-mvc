@@ -22,8 +22,8 @@
         <div class="col-7 offset-1">
             <h2 class="text-gradient">@Model.Product.Name</h2>
             <h5 class="mb-3">by @Model.Product.Author</h5>
-            <span class="category-label">@Model.Product.Category.Name</span>
-            <span class="category-label">@Model.Product.CoverType.Name</span>
+            <span class="category-label">@Model.Product.Category!.Name</span>
+            <span class="category-label">@Model.Product.CoverType!.Name</span>
 
             <div class="fw-semibold mt-3 row text-muted">
                 <div class="col-3 pe-0">
@@ -73,7 +73,10 @@
 
             <p>ISBN: @Model.Product.ISBN</p>
 
-            <button class="bg-gradient btn btn-secondary fw-semibold py-2 text-uppercase" type="submit">Add to cart</button>
+            <button class="button-gradient fw-semibold py-2 text-uppercase" type="submit">
+                <i class="fa-solid fa-cart-plus me-2"></i>
+                Add to cart
+            </button>
 
         </div>
     </div>

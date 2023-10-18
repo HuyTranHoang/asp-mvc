@@ -13,16 +13,16 @@ public class ShoppingCart
     public int ProductId { get; set; }
     [ForeignKey("ProductId")]
     [ValidateNever]
-    public Product Product { get; set; }
+    public Product? Product { get; set; }
 
     [DisplayName("Count: ")]
     [Range(1, 999, ErrorMessage = "Please enter a value beetween 1 and 999")]
     public int Quantity { get; set; }
 
-    public string IdentityUserId { get; set; }
+    public string IdentityUserId { get; set; } = "";
     [ForeignKey("IdentityUserId")]
     [ValidateNever]
-    public IdentityUser IdentityUser { get; set; }
+    public IdentityUser? IdentityUser { get; set; }
 
     [NotMapped]
     public double Price { get; set; }

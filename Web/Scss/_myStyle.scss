@@ -11,20 +11,24 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
 //
 
 //Swap icon when hover
 .icon-swap {
   position: relative;
+
   .init-icon, .second-icon {
     position: relative;
     transition-property: opacity;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
   }
+
   .init-icon {
     opacity: 1;
   }
+
   .second-icon {
     opacity: 0;
     position: absolute;
@@ -32,16 +36,19 @@ input[type=number] {
     left: 20%;
     transform: translate(-50%, -50%);
   }
+
   &:hover .init-icon {
     opacity: 0;
   }
+
   &:hover .second-icon {
     opacity: 1
   }
 }
+
 //
 
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
 }
@@ -144,7 +151,21 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .text-gradient {
-  background-image: linear-gradient(to right,rgba(255,69,58,1), rgba(255,159,10,1));
+  background-image: linear-gradient(to right, rgba(255, 69, 58, 1), rgba(255, 159, 10, 1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.button-gradient {
+  border: 0;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-weight: 500;
+  border-radius: .5rem;
+  background-image: linear-gradient(to right, #a855f7, #ec4899);
+}
+
+.button-gradient:hover {
+  background-image: linear-gradient(to right, #ec4899, #a855f7);
+}
+

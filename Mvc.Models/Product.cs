@@ -32,12 +32,12 @@ public class Product
     public int CategoryId { get; set; }
     [ForeignKey("CategoryId")]
     [ValidateNever]
-    public Category Category { get; set; }
+    public  Category? Category { get; set; }
 
     [DisplayName("Cover type")]
     public int CoverTypeId { get; set; }
     [ForeignKey("CoverTypeId")]
     [ValidateNever]
-    public CoverType CoverType { get; set; }
+    public CoverType? CoverType { get; set; }
 
 }
