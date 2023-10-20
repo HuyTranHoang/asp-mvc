@@ -32,7 +32,7 @@
                 <a asp-action="Index" class="text-decoration-none text-muted">Clear search result</a>
             }
         </div>
-        <a asp-action="Create" class="btn btn-primary text-decoration-none text-white">
+        <a asp-action="Upsert" class="btn btn-primary text-decoration-none text-white">
             <i class="fa-plus fa-regular"></i> Create new product
         </a>
     </div>
@@ -71,13 +71,13 @@
                     <td>@product.Name</td>
                     <td>@($"{product.Price,0:C0}")</td>
                     <td>
-                        <img src="~/images/product/@product.ImageUrl" style="width: 75px" alt="Product image">
+                        <img alt="Product image" src="~/images/product/@product.ImageUrl" style="width: 75px">
                     </td>
                     <td>@product.Category.Name</td>
                     <td>@product.CreatedAt</td>
                     <td>
                         <div class="d-flex">
-                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                            <a asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
                                 <i class="fa-pen-to-square fa-regular"></i> Edit
                             </a>
 

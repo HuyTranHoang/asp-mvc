@@ -6,7 +6,7 @@
 }
 
 <h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
+<partial for="StatusMessage" name="_StatusMessage" />
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
@@ -20,7 +20,7 @@
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button class="btn btn-lg btn-primary w-100" id="update-profile-button" type="submit">Save</button>
         </form>
     </div>
 </div>

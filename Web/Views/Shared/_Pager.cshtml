@@ -29,7 +29,9 @@
                 var currentPage = page;
                 <li class="page-item @(currentPage == Model.CurrentPage ? "active" : "")">
                     <a asp-action="Index" asp-controller="@controllerName" asp-route-page="@currentPage"
-                        asp-route-s="@searchString" asp-route-sortOrder="@sortOrder" class="page-link">@currentPage</a>
+                        asp-route-s="@searchString" asp-route-sortOrder="@sortOrder" class="page-link">
+                        @currentPage
+                    </a>
                 </li>
             }
 

@@ -33,7 +33,7 @@
                 <a asp-action="Index" class="text-decoration-none text-muted">Clear search result</a>
             }
         </div>
-        <a asp-action="Create" class="btn btn-primary text-decoration-none text-white">
+        <a asp-action="Upsert" class="btn btn-primary text-decoration-none text-white">
             <i class="fa-plus fa-regular"></i> Create new category
         </a>
     </div>
@@ -68,7 +68,7 @@
                     <td>@category.CreatedAt</td>
                     <td>
                         <div class="d-flex">
-                            <a asp-action="Edit" asp-route-id="@category.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                            <a asp-action="Upsert" asp-route-id="@category.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
                                 <i class="fa-pen-to-square fa-regular"></i> Edit
                             </a>
 

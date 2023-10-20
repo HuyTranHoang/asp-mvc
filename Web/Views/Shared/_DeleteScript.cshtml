@@ -17,8 +17,8 @@
 
 @model Pager
 
-<form asp-controller="@controllerName" asp-action="Delete" id="deleteForm">
-    <input type="hidden" value="@Model.CurrentPage" name="page">
+<form asp-action="Delete" asp-controller="@controllerName" id="deleteForm">
+    <input name="page" type="hidden" value="@Model.CurrentPage">
 </form>
 
 <script >

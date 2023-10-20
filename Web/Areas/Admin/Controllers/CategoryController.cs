@@ -12,12 +12,12 @@ public class CategoryController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    [TempData] public string? SuccessMessage { get; set; }
-
     public CategoryController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
+
+    [TempData] public string? SuccessMessage { get; set; }
 
     public IActionResult Index(int? page, string? s, string? sortOrder)
     {
@@ -58,41 +58,18 @@ public class CategoryController : Controller
         return View(onePageOfCategories);
     }
 
-
-    public IActionResult Create()
+    public IActionResult Upsert(int? id)
     {
-        return View();
-    }
+        Category category;
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Store([Bind("Id,Name, DisplayOrder")] Category category)
-    {
-        Validation(category);
-
-        if (ModelState.IsValid)
+        if (id == null || id == 0)
         {
-            _unitOfWork.Category.Insert(category);
-            _unitOfWork.Save();
-
-            SuccessMessage = "New category added";
-            return RedirectToAction(nameof(Index));
+            category = new Category();
         }
-
-        return View("create");
-    }
-
-    public IActionResult Edit(int? id)
-    {
-        if (id == null)
+        else
         {
-            return NotFound();
-        }
-
-        var category = _unitOfWork.Category.GetById(id);
-        if (category == null)
-        {
-            return NotFound();
+            category = _unitOfWork.Category.GetById(id);
+            if (category == null) return NotFound();
         }
 
         return View(category);
@@ -100,22 +77,27 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(int id, [Bind("Id,Name, DisplayOrder")] Category category)
+    public IActionResult Upsert(int id, [Bind("Id,Name, DisplayOrder")] Category category)
     {
-        if (id != category.Id)
-        {
-            return NotFound();
-        }
+        if (id != category.Id) return NotFound();
 
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return View("upsert", category);
+
+        if (id == 0)
         {
+            Validation(category);
+            _unitOfWork.Category.Insert(category);
+            SuccessMessage = "New category added";
+        }
+        else
+        {
+            Validation(category, true);
             _unitOfWork.Category.Update(category);
-            _unitOfWork.Save();
             SuccessMessage = "Product updated";
-            return RedirectToAction(nameof(Index));
         }
 
-        return View("edit", category);
+        _unitOfWork.Save();
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
@@ -123,17 +105,11 @@ public class CategoryController : Controller
     public IActionResult Delete(int id, int? page)
     {
         _unitOfWork.Category.Delete(id);
-        if (_unitOfWork.Save() > 0)
-        {
-            SuccessMessage = "Category deleted";
-        }
+        if (_unitOfWork.Save() > 0) SuccessMessage = "Category deleted";
 
         var categories = _unitOfWork.Category.GetAll();
         var pageNumber = page ?? 1;
-        if (!Pager.HasProductsOnPage(categories, pageNumber))
-        {
-            pageNumber -= 1;
-        }
+        if (!Pager.HasProductsOnPage(categories, pageNumber)) pageNumber -= 1;
 
         return RedirectToAction(nameof(Index), new { page = pageNumber });
     }
@@ -157,14 +133,9 @@ public class CategoryController : Controller
                 .Get(c => c.DisplayOrder == category.DisplayOrder && c.Id != category.Id).Any();
         }
 
-        if (categoryNameExist)
-        {
-            ModelState.AddModelError("Name", "The category name already exist");
-        }
+        if (categoryNameExist) ModelState.AddModelError("Name", "The category name already exist");
 
         if (categoryDisplayOrderExist)
-        {
             ModelState.AddModelError("DisplayOrder", "The category display order already exist");
-        }
     }
 }

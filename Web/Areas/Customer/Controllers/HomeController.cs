@@ -11,10 +11,8 @@ namespace MVC.Areas.Customer.Controllers;
 [Area("Customer")]
 public class HomeController : Controller
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<HomeController> _logger;
-
-    [TempData] public string? SuccessMessage { get; set; }
+    private readonly IUnitOfWork _unitOfWork;
 
     public HomeController(IUnitOfWork unitOfWork, ILogger<HomeController> logger)
     {
@@ -22,10 +20,12 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [TempData] public string? SuccessMessage { get; set; }
+
 
     public IActionResult Index()
     {
-        var products = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+        var products = _unitOfWork.Product.GetAll("Category,CoverType");
         return View(products);
     }
 
@@ -33,15 +33,12 @@ public class HomeController : Controller
     {
         var shoppingCart = new ShoppingCart
         {
-            Product = _unitOfWork.Product.Get(p => p.Id == id, includeProperties: "Category,CoverType").FirstOrDefault(),
+            Product = _unitOfWork.Product.Get(p => p.Id == id, "Category,CoverType").FirstOrDefault(),
             ProductId = id,
             Quantity = 1
         };
 
-        if (shoppingCart.Product == null)
-        {
-            return NotFound();
-        }
+        if (shoppingCart.Product == null) return NotFound();
 
         return View(shoppingCart);
     }
@@ -57,8 +54,8 @@ public class HomeController : Controller
         shoppingCart.IdentityUserId = userId;
 
         var cartFromDb = _unitOfWork.ShoppingCart
-                .Get(u => u.IdentityUserId == userId && u.ProductId == shoppingCart.ProductId)
-                .FirstOrDefault();
+            .Get(u => u.IdentityUserId == userId && u.ProductId == shoppingCart.ProductId)
+            .FirstOrDefault();
 
         if (cartFromDb != null)
         {

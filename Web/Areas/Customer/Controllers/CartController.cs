@@ -13,12 +13,13 @@ namespace MVC.Areas.Customer.Controllers;
 public class CartController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
-    public ShoppingCartVM ShoppingCartVM { get; set; } = new();
 
     public CartController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
+
+    public ShoppingCartVM ShoppingCartVM { get; set; } = new();
 
     public IActionResult Index()
     {
@@ -28,7 +29,7 @@ public class CartController : Controller
         ShoppingCartVM = new ShoppingCartVM
         {
             ShoppingCartList = _unitOfWork.ShoppingCart.Get(u => u.IdentityUserId == userId,
-                includeProperties: "Product")
+                "Product")
         };
 
         foreach (var cart in ShoppingCartVM.ShoppingCartList)
@@ -86,15 +87,9 @@ public class CartController : Controller
 
     private double GetPriceBasedOnquantity(ShoppingCart shoppingCart)
     {
-        if (shoppingCart.Quantity <= 50)
-        {
-            return shoppingCart.Product.Price;
-        }
+        if (shoppingCart.Quantity <= 50) return shoppingCart.Product.Price;
 
-        if (shoppingCart.Quantity <= 100)
-        {
-            return shoppingCart.Product.Price50 ?? shoppingCart.Product.Price;
-        }
+        if (shoppingCart.Quantity <= 100) return shoppingCart.Product.Price50 ?? shoppingCart.Product.Price;
 
         return shoppingCart.Product.Price100 ?? shoppingCart.Product.Price;
     }

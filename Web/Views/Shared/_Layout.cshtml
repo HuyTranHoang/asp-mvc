@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     var routeUrl = Url.RouteUrl(ViewContext.RouteData.Values);
@@ -39,8 +38,8 @@
 
                     @if (User.IsInRole(SD.RoleAdmin))
                     {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @(returnUrl.Contains("/Admin") ? "active" : "")" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="dropdown nav-item">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle @(returnUrl.Contains("/Admin") ? "active" : "")" data-bs-toggle="dropdown" href="#" role="button">
                                 Content Management
                             </a>
                             <ul class="dropdown-menu">
@@ -101,6 +100,6 @@
 <script asp-append-version="true" src="~/js/bootstrap.bundle.min.js"></script>
 <script asp-append-version="true" src="~/js/sweetalert2.all.min.js"></script>
 <script asp-append-version="true" src="~/js/site.js"></script>
-@await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

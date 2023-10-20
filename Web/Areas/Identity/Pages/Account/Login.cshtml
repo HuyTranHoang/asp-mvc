@@ -14,35 +14,35 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
+                    <input aria-required="true" asp-for="Input.Email" autocomplete="username" class="form-control" placeholder="name@example.com" />
                     <label asp-for="Input.Email" class="form-label"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password"/>
+                    <input aria-required="true" asp-for="Input.Password" autocomplete="current-password" class="form-control" placeholder="password" />
                     <label asp-for="Input.Password" class="form-label"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <input asp-for="Input.RememberMe" class="form-check-input" />
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button class="btn btn-lg btn-primary w-100" id="login-submit" type="submit">Log in</button>
                 </div>
                 <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a asp-page="./ForgotPassword" id="forgot-password">Forgot your password?</a>
                     </p>
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
                     </p>
                     <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        <a asp-page="./ResendEmailConfirmation" id="resend-confirmation">Resend email confirmation</a>
                     </p>
                 </div>
             </form>
@@ -57,19 +57,22 @@
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            There are no external authentication services configured. See this
+                            <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
                         </p>
                     </div>
                 }
                 else
                 {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" class="form-horizontal" id="external-account" method="post">
                         <div>
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    <button class="btn btn-primary" name="provider" title="Log in using your @provider.DisplayName account" type="submit" value="@provider.Name">@provider.DisplayName</button>
                                 }
                             </p>
                         </div>
