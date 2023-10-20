@@ -33,9 +33,7 @@
 
     <ItemGroup>
         <AdditionalFiles Include="Areas\Admin\Views\Category\Index.cshtml"/>
-        <AdditionalFiles Include="Areas\Admin\Views\Product\Create.cshtml"/>
         <AdditionalFiles Include="Areas\Admin\Views\Product\Details.cshtml"/>
-        <AdditionalFiles Include="Areas\Admin\Views\Product\Edit.cshtml"/>
         <AdditionalFiles Include="Areas\Admin\Views\Product\Index.cshtml"/>
         <AdditionalFiles Include="Areas\Customer\Views\Home\Details.cshtml"/>
         <AdditionalFiles Include="Areas\Customer\Views\Home\Index.cshtml"/>

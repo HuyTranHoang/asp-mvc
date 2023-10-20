@@ -20,7 +20,7 @@ public class ProductController : Controller
         _webHostEnvironment = webHostEnvironment;
     }
 
-    [TempData] public string? SuccessMessage { private get; set; }
+    [TempData] public string? SuccessMessage { get; set; }
 
     public IActionResult Index(int? page, string? s, string? sortOrder)
     {
