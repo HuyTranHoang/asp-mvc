@@ -15,10 +15,10 @@
     var controllerName = ViewData["ControllerName"] ?? "Home";
 }
 
-@model Pager
+@* @model Pager *@
 
 <form asp-action="Delete" asp-controller="@controllerName" id="deleteForm">
-    <input name="page" type="hidden" value="@Model.CurrentPage">
+    @* <input name="page" type="hidden" value="@Model.CurrentPage"> *@
 </form>
 
 <script >

@@ -85,7 +85,7 @@ public class CoverTypeController : Controller
     public IActionResult Delete(int id, int? page)
     {
         _unitOfWork.CoverType.Delete(id);
-        if (_unitOfWork.Save() > 0) SuccessMessage = "Category deleted";
+        if (_unitOfWork.Save() > 0) SuccessMessage = "Cover type deleted";
 
         var coverTypes = _unitOfWork.CoverType.GetAll();
         var pageNumber = page ?? 1;

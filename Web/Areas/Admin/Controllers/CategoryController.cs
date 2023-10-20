@@ -19,43 +19,11 @@ public class CategoryController : Controller
 
     [TempData] public string? SuccessMessage { get; set; }
 
-    public IActionResult Index(int? page, string? s, string? sortOrder)
+    public IActionResult Index()
     {
-        var query = _unitOfWork.Category.GetAll().AsQueryable();
+        var categories = _unitOfWork.Category.GetAll();
 
-        // var query = _unitOfWork.CategoryRepository.Get(null, "DisplayOrder").AsQueryable();
-
-        ViewBag.NameSortParam = sortOrder == SortData.NameAsc
-            ? SortData.NameDesc
-            : SortData.NameAsc;
-
-        ViewBag.DisplayOrderSortParam = sortOrder == SortData.DisplayOrderAsc
-            ? SortData.DisplayOrderDesc
-            : SortData.DisplayOrderAsc;
-
-        ViewBag.CreatedAtParam = sortOrder == SortData.CreatedAtAsc
-            ? SortData.CreatedAtDesc
-            : SortData.CreatedAtAsc;
-
-        query = query.ApplySortCategory(sortOrder);
-
-        if (!string.IsNullOrEmpty(s))
-        {
-            s = s.Trim();
-            query = query.Where(c => c.Name.Contains(s, StringComparison.OrdinalIgnoreCase));
-        }
-
-        var pageNumber = page ?? 1;
-        var recsCount = query.Count();
-        var pager = new Pager(recsCount, pageNumber);
-
-        var recSkip = (pageNumber - 1) * pager.PageSize;
-
-        var onePageOfCategories = query.Skip(recSkip).Take(pager.PageSize);
-
-        ViewBag.Pager = pager;
-
-        return View(onePageOfCategories);
+        return View(categories);
     }
 
     public IActionResult Upsert(int? id)
@@ -81,37 +49,30 @@ public class CategoryController : Controller
     {
         if (id != category.Id) return NotFound();
 
+        if (id == 0)
+        {
+            Validation(category);
+        }
+        else
+        {
+            Validation(category, true);
+        }
+
         if (!ModelState.IsValid) return View("upsert", category);
 
         if (id == 0)
         {
-            Validation(category);
             _unitOfWork.Category.Insert(category);
             SuccessMessage = "New category added";
         }
         else
         {
-            Validation(category, true);
             _unitOfWork.Category.Update(category);
             SuccessMessage = "Product updated";
         }
 
         _unitOfWork.Save();
         return RedirectToAction(nameof(Index));
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, int? page)
-    {
-        _unitOfWork.Category.Delete(id);
-        if (_unitOfWork.Save() > 0) SuccessMessage = "Category deleted";
-
-        var categories = _unitOfWork.Category.GetAll();
-        var pageNumber = page ?? 1;
-        if (!Pager.HasProductsOnPage(categories, pageNumber)) pageNumber -= 1;
-
-        return RedirectToAction(nameof(Index), new { page = pageNumber });
     }
 
     private void Validation(Category category, bool isUpdate = false)
@@ -123,7 +84,7 @@ public class CategoryController : Controller
                 .Get(c => c.Name == category.Name).Any();
 
             categoryDisplayOrderExist = _unitOfWork.Category
-                .Get(c => c.Name == category.Name).Any();
+                .Get(c => c.DisplayOrder == category.DisplayOrder).Any();
         }
         else
         {
@@ -138,4 +99,23 @@ public class CategoryController : Controller
         if (categoryDisplayOrderExist)
             ModelState.AddModelError("DisplayOrder", "The category display order already exist");
     }
+
+
+    #region API CALLS
+
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        var categoryList = _unitOfWork.Category.GetAll();
+        return Json(new { data = categoryList });
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(int id)
+    {
+        _unitOfWork.Category.Delete(id);
+        return Json(_unitOfWork.Save() > 0 ? new { success = true, message = "Category deleted" } : new { success = false, message = "Error while deleting" });
+    }
+
+    #endregion
 }
