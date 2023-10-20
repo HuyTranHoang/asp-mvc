@@ -32,9 +32,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return query.ToList();
     }
 
-    public IEnumerable<T> Get(Expression<Func<T, bool>>? filter, string? includeProperties = null, string? orderBy = null, bool isDescending = false)
+    public IEnumerable<T> Get(Expression<Func<T, bool>>? filter, string? includeProperties = null)
     {
-        IQueryable<T> query = _dbSet.AsQueryable();
+        IQueryable<T> query = _dbSet;
 
         if (filter != null)
         {
