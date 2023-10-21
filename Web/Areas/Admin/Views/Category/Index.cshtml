@@ -49,60 +49,15 @@
 
     <script >
           $(function() {
-            loadDataTable();
             const table = $('#tblCategory')
-            const dataTable = table.DataTable()
-            table.on( "click", ".delete-button", async function() {
-                const itemId = $(this).data('id')
-                const url = `/Admin/Category/Delete/${itemId}`
-
-                const result = await Swal.fire({
-                  title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Yes, delete it!'
-                })
-
-                if (result && result.isConfirmed) {
-                   $.ajax({
-                        url: url,
-                        type: "DELETE",
-                        success: function (data) {
-                            dataTable.ajax.reload()
-                            Swal.fire({
-                              icon: 'success',
-                              title: 'Successfully!',
-                              text: data.message,
-                              timer: 1500
-                            })
-                        }
-                    })
-                }
-            });
-
-            //Enable search box outside
-            const searchInput = $("#search")
-            const clearSearchButton = $("#clearButton")
-            searchInput.keyup(function () {
-                dataTable.search($(this).val()).draw()
-                if (searchInput.val().length > 0) {
-                    clearSearchButton.css("display", "block");
-                } else {
-                    clearSearchButton.css("display", "none");
-                }
-            })
-            //Clear search button
-            clearSearchButton.click(function () {
-                searchInput.val("")
-                clearSearchButton.css("display", "none");
-                dataTable.search($(this).val()).draw()
-            })
+            const dataTable = loadDataTable(table)
+            handleDeleteButton(table, dataTable)
+            handleSearchBox(dataTable)
           })
 
 
-          function loadDataTable() {
-            $('#tblCategory').DataTable({
+          function loadDataTable(table) {
+            return table.DataTable({
                   columnDefs: [
                       {orderable: false, targets: 4}
                   ],
@@ -136,6 +91,57 @@
                           }
                       },
                   ]
+              })
+          }
+
+          function handleDeleteButton(table, dataTable) {
+              table.on( "click", ".delete-button", async function() {
+                  const itemId = $(this).data('id')
+                  const url = `/Admin/Category/Delete/${itemId}`
+
+                  const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!'
+                  })
+
+                  if (result && result.isConfirmed) {
+                     $.ajax({
+                          url: url,
+                          type: "DELETE",
+                          success: function (data) {
+                              dataTable.ajax.reload()
+                              Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully!',
+                                text: data.message,
+                                timer: 1500
+                              })
+                          }
+                      })
+                  }
+              });
+          }
+
+          function handleSearchBox(dataTable) {
+              //Enable search box outside
+              const searchInput = $("#search")
+              const clearSearchButton = $("#clearButton")
+              searchInput.keyup(function () {
+                  dataTable.search($(this).val()).draw()
+                  if (searchInput.val().length > 0) {
+                      clearSearchButton.css("display", "block");
+                  } else {
+                      clearSearchButton.css("display", "none");
+                  }
+              })
+              //Clear search button
+              clearSearchButton.click(function () {
+                  searchInput.val("")
+                  clearSearchButton.css("display", "none");
+                  dataTable.search($(this).val()).draw()
               })
           }
         </script>
