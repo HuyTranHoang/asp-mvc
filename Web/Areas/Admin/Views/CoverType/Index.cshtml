@@ -84,7 +84,12 @@
 
     <script >
       $(function() {
-          const dataTable = $('#tblCoverType').DataTable()
+          const dataTable = $('#tblCoverType').DataTable({
+            columnDefs: [
+                {orderable: false, targets: 3}
+            ],
+          })
+
           handleSearchBox(dataTable)
           function handleSearchBox(dataTable) {
               //Enable search box outside
