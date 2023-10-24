@@ -18,17 +18,11 @@
     <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Cover Type List</h1>
 
     <div class="d-flex justify-content-between px-4 py-2">
-        <div class="align-items-center d-flex">
-            <form asp-action="Index" class="me-3 position-relative" method="GET">
-                <input class="form-control" id="search" name="s" placeholder="Search by name..." style="padding-right: 35px" type="text" value="@searchString">
-                <button class="btn end-0 position-absolute top-0" type="submit">
-                    <i class="fa-magnifying-glass fa-solid"></i>
-                </button>
-            </form>
-            @if (!string.IsNullOrEmpty(searchString))
-            {
-                <a asp-action="Index" class="text-decoration-none text-muted">Clear search result</a>
-            }
+        <div class="align-items-center d-flex position-relative">
+            <input class="form-control" id="search" name="search" placeholder="Search..." style="padding-right: 35px" type="text">
+            <button class="btn end-0 position-absolute top-0" id="clearButton" style="display: none">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <a asp-action="Upsert" class="btn btn-primary text-decoration-none text-white">
             <i class="fa-plus fa-regular"></i> Create new category
@@ -36,7 +30,7 @@
     </div>
 
     <div class="p-4">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="tblCoverType">
             <thead>
             <tr class="table-primary">
                 <th scope="col" style="width: 5%">#</th>
@@ -82,11 +76,35 @@
             </tbody>
         </table>
     </div>
-
-    <partial model="pager" name="_Pager" />
 </section>
 
 @section Scripts {
     <partial model="successMessage" name="_NotificationScriptsPartial" />
     <partial model="pager" name="_DeleteScript" />
+
+    <script >
+      $(function() {
+          const dataTable = $('#tblCoverType').DataTable()
+          handleSearchBox(dataTable)
+          function handleSearchBox(dataTable) {
+              //Enable search box outside
+              const searchInput = $("#search")
+              const clearSearchButton = $("#clearButton")
+              searchInput.keyup(function () {
+                  dataTable.search($(this).val()).draw()
+                  if (searchInput.val().length > 0) {
+                      clearSearchButton.css("display", "block");
+                  } else {
+                      clearSearchButton.css("display", "none");
+                  }
+              })
+              //Clear search button
+              clearSearchButton.click(function () {
+                  searchInput.val("")
+                  clearSearchButton.css("display", "none");
+                  dataTable.search($(this).val()).draw()
+              })
+          }
+      })
+    </script>
 }

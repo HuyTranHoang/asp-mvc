@@ -16,27 +16,10 @@ public class CoverTypeController : Controller
 
     [TempData] public string? SuccessMessage { get; set; }
 
-    public IActionResult Index(int? page, string? s)
+    public IActionResult Index()
     {
-        var query = _unitOfWork.CoverType.GetAll().AsQueryable();
-
-        if (!string.IsNullOrEmpty(s))
-        {
-            s = s.Trim();
-            query = query.Where(c => c.Name.Contains(s, StringComparison.OrdinalIgnoreCase));
-        }
-
-        var pageNumber = page ?? 1;
-        var recsCount = query.Count();
-        var pager = new Pager(recsCount, pageNumber);
-
-        var recSkip = (pageNumber - 1) * pager.PageSize;
-
-        var onePageOfCategoriesCoverTypes = query.Skip(recSkip).Take(pager.PageSize);
-
-        ViewBag.Pager = pager;
-
-        return View(onePageOfCategoriesCoverTypes);
+        var coverTypes = _unitOfWork.CoverType.GetAll();
+        return View(coverTypes);
     }
 
     public IActionResult Upsert(int? id)
