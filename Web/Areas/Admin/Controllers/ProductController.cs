@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
 using Mvc.Utilities;
+using MVC.ViewModels;
 
 namespace MVC.Areas.Admin.Controllers;
 
@@ -75,31 +76,31 @@ public class ProductController : Controller
 
     public IActionResult Upsert(int? id)
     {
-        Product product;
+        var productDto = new ProductDto();
 
         if (id == null || id == 0)
         {
-            product = new Product();
+            productDto.Product = new Product();
         }
         else
         {
-            product = _unitOfWork.Product.GetById(id);
-            if (product == null) return NotFound();
+            productDto.Product = _unitOfWork.Product.GetById(id);
+            if ( productDto.Product == null) return NotFound();
         }
 
-        ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
-        ViewData["CoverTypeId"] = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name", product.CoverTypeId);
-        return View(product);
+        productDto.CategoryList = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name",  productDto.Product.CategoryId);
+        productDto.CoverTypeList = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name",  productDto.Product.CoverTypeId);
+        return View(productDto);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Upsert(int id,
-        [Bind("Id,Name,Author,ISBN,Price,Price50,Price100,Description,CategoryId,CoverTypeId")]
-        Product product,
+        [Bind("Product")]
+        ProductDto productDto,
         IFormFile? file)
     {
-        if (id != product.Id) return NotFound();
+        if (id != productDto.Product.Id) return NotFound();
 
         if (ModelState.IsValid)
         {
@@ -110,8 +111,8 @@ public class ProductController : Controller
                 var productPath = Path.Combine(wwwRootPath, "images/product");
 
                 //Delete old image
-                var oldImagePath = Path.Combine(productPath, product.ImageUrl);
-                if (System.IO.File.Exists(oldImagePath) && product.ImageUrl != "default.jpg")
+                var oldImagePath = Path.Combine(productPath, productDto.Product.ImageUrl);
+                if (System.IO.File.Exists(oldImagePath) && productDto.Product.ImageUrl != "default.jpg")
                     System.IO.File.Delete(oldImagePath);
 
                 using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
@@ -119,17 +120,17 @@ public class ProductController : Controller
                     file.CopyTo(fileStream);
                 }
 
-                product.ImageUrl = fileName;
+                productDto.Product.ImageUrl = fileName;
             }
 
             if (id == 0)
             {
-                _unitOfWork.Product.Insert(product);
+                _unitOfWork.Product.Insert(productDto.Product);
                 SuccessMessage = "New product added";
             }
             else
             {
-                _unitOfWork.Product.Update(product);
+                _unitOfWork.Product.Update(productDto.Product);
                 SuccessMessage = "Product updated";
             }
 
@@ -137,9 +138,9 @@ public class ProductController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewData["CategoryId"] = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", product.CategoryId);
-        ViewData["CoverTypeId"] = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name", product.CoverTypeId);
-        return View("upsert", product);
+        productDto.CategoryList = new SelectList(_unitOfWork.Category.GetAll(), "Id", "Name", productDto.Product.CategoryId);
+        productDto.CoverTypeList = new SelectList(_unitOfWork.CoverType.GetAll(), "Id", "Name", productDto.Product.CoverTypeId);
+        return View("upsert", productDto);
     }
 
     [HttpPost]
