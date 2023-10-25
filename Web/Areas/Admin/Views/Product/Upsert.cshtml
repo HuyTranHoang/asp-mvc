@@ -1,13 +1,12 @@
 @model ProductDto
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Model.Product.Id != 0 ? "Update" : "Create" + " Product";
 }
 
 <section class="bg-body-tertiary mt-4 pb-3 rounded-bottom shadow-lg">
     <h1 class="bg-gradient bg-secondary px-3 py-4 rounded-top text-center">
-        @(Model.Product.Id != 0 ? "Update" : "Create")
-        Product
+        @ViewBag.Title
     </h1>
 
     <div class="d-flex justify-content-end px-4 py-2">
@@ -83,9 +82,10 @@
                     <label asp-for="Product.ImageUrl" class="form-label"></label>
                     <input class="form-control" name="file" type="file" accept="image/*">
                     <input asp-for="Product.ImageUrl" type="hidden">
+                    <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
                 </div>
 
-                <div class="d-flex form-group justify-content-center mt-5">
+                <div class="d-flex form-group justify-content-center mt-3">
                     <input class="btn btn-primary text-white" style="width: 10rem" type="submit" value="@(Model.Product.Id != 0 ? "Update" : "Create")" />
                 </div>
             </form>

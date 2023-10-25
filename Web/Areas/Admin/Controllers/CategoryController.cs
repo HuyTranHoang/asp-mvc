@@ -30,7 +30,7 @@ public class CategoryController : Controller
     {
         Category category;
 
-        if (id == null || id == 0)
+        if (id is null or 0)
         {
             category = new Category();
         }
@@ -49,14 +49,8 @@ public class CategoryController : Controller
     {
         if (id != category.Id) return NotFound();
 
-        if (id == 0)
-        {
-            Validation(category);
-        }
-        else
-        {
-            Validation(category, true);
-        }
+        Validation(category);
+
 
         if (!ModelState.IsValid) return View("upsert", category);
 
@@ -75,26 +69,24 @@ public class CategoryController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private void Validation(Category category, bool isUpdate = false)
+    private void Validation(Category category)
     {
-        bool categoryNameExist, categoryDisplayOrderExist;
-        if (!isUpdate)
-        {
-            categoryNameExist = _unitOfWork.Category
-                .Get(c => c.Name == category.Name).Any();
+        var isCreate = category.Id == 0;
 
-            categoryDisplayOrderExist = _unitOfWork.Category
-                .Get(c => c.DisplayOrder == category.DisplayOrder).Any();
-        }
-        else
-        {
-            categoryNameExist = _unitOfWork.Category
-                .Get(c => c.Name == category.Name && c.Id != category.Id).Any();
-            categoryDisplayOrderExist = _unitOfWork.Category
-                .Get(c => c.DisplayOrder == category.DisplayOrder && c.Id != category.Id).Any();
-        }
+        var categoryNameExist = _unitOfWork.Category
+            .Get(isCreate
+                ? c => c.Name == category.Name
+                : c => c.Name == category.Name && c.Id != category.Id)
+            .Any();
 
-        if (categoryNameExist) ModelState.AddModelError("Name", "The category name already exist");
+        var categoryDisplayOrderExist = _unitOfWork.Category
+            .Get(isCreate
+                ? c => c.DisplayOrder == category.DisplayOrder
+                : c => c.DisplayOrder == category.DisplayOrder && c.Id != category.Id)
+            .Any();
+
+        if (categoryNameExist)
+            ModelState.AddModelError("Name", "The category name already exist");
 
         if (categoryDisplayOrderExist)
             ModelState.AddModelError("DisplayOrder", "The category display order already exist");
@@ -111,6 +103,7 @@ public class CategoryController : Controller
     }
 
     [HttpDelete]
+    [ValidateAntiForgeryToken]
     public IActionResult Delete(int id)
     {
         _unitOfWork.Category.Delete(id);

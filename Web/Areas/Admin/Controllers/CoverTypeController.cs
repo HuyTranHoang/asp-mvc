@@ -26,7 +26,7 @@ public class CoverTypeController : Controller
     {
         CoverType coverType;
 
-        if (id == null || id == 0)
+        if (id is null or 0)
         {
             coverType = new CoverType();
         }
@@ -63,17 +63,23 @@ public class CoverTypeController : Controller
     }
 
 
-    [HttpPost]
+
+    #region API CALLS
+
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        var coverTypeList = _unitOfWork.CoverType.GetAll();
+        return Json(new { data = coverTypeList });
+    }
+
+    [HttpDelete]
     [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, int? page)
+    public IActionResult Delete(int id)
     {
         _unitOfWork.CoverType.Delete(id);
-        if (_unitOfWork.Save() > 0) SuccessMessage = "Cover type deleted";
-
-        var coverTypes = _unitOfWork.CoverType.GetAll();
-        var pageNumber = page ?? 1;
-        if (!Pager.HasProductsOnPage(coverTypes, pageNumber)) pageNumber -= 1;
-
-        return RedirectToAction(nameof(Index), new { page = pageNumber });
+        return Json(_unitOfWork.Save() > 0 ? new { success = true, message = "Cover type deleted" } : new { success = false, message = "Error while deleting" });
     }
+
+    #endregion
 }

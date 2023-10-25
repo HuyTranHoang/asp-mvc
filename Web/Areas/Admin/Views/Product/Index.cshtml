@@ -2,35 +2,20 @@
 
 @{
     ViewData["Title"] = "Product";
-    ViewData["ControllerName"] = "Product";
-
-    var index = 1;
-
-    var pager = ViewBag.Pager != null ? ViewBag.Pager : new Pager();
-
-    var searchString = Context.Request.Query["s"];
 
     var successMessage = TempData["SuccessMessage"];
 
-    var nameSortParam = ViewBag.NameSortParam;
-    var priceSortParam = ViewBag.PriceSortParam;
-    var createdAtParam = ViewBag.CreatedAtParam;
+
 }
 <section class="bg-body-tertiary mt-4 pb-3 rounded-bottom shadow-lg">
     <h1 class="bg-body-secondary bg-gradient px-3 py-4 rounded-top text-center">Product List</h1>
 
     <div class="d-flex justify-content-between px-4 py-2">
-        <div class="align-items-center d-flex">
-            <form asp-action="Index" class="me-3 position-relative" method="GET">
-                <input class="form-control" id="search" name="s" placeholder="Search by name..." style="padding-right: 35px" type="text" value="@searchString">
-                <button class="btn end-0 position-absolute top-0" type="submit">
-                    <i class="fa-magnifying-glass fa-solid"></i>
-                </button>
-            </form>
-            @if (!string.IsNullOrEmpty(searchString))
-            {
-                <a asp-action="Index" class="text-decoration-none text-muted">Clear search result</a>
-            }
+        <div class="align-items-center d-flex position-relative">
+            <input class="form-control" id="search" name="search" placeholder="Search..." style="padding-right: 35px" type="text">
+            <button class="btn end-0 position-absolute top-0" id="clearButton" style="display: none">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <a asp-action="Upsert" class="btn btn-primary text-decoration-none text-white">
             <i class="fa-plus fa-regular"></i> Create new product
@@ -38,17 +23,15 @@
     </div>
 
     <div class="p-4">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" id="tblProduct">
             <thead>
             <tr class="table-primary">
                 <th scope="col" style="width: 5%">#</th>
                 <th scope="col">
                     Name
-                    <partial model="@nameSortParam" name="_SortColumn" />
                 </th>
                 <th scope="col" style="width: 10%">
                     Price
-                    <partial model="@priceSortParam" name="_SortColumn" />
                 </th>
                 <th scope="col">
                     Image
@@ -58,53 +41,128 @@
                 </th>
                 <th scope="col" style="width: 15%">
                     Created At
-                    <partial model="@createdAtParam" name="_SortColumn" />
                 </th>
                 <th scope="col" style="width: 20%">Actions</th>
             </tr>
             </thead>
-            <tbody>
-            @foreach (var product in Model)
-            {
-                <tr>
-                    <td>@index</td>
-                    <td>@product.Name</td>
-                    <td>@($"{product.Price,0:C0}")</td>
-                    <td>
-                        <img alt="Product image" src="~/images/product/@product.ImageUrl" style="width: 75px">
-                    </td>
-                    <td>@product.Category.Name</td>
-                    <td>@product.CreatedAt</td>
-                    <td>
-                        <div class="d-flex">
-                            <a asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
-                                <i class="fa-pen-to-square fa-regular"></i> Edit
-                            </a>
-
-                            <button class="btn btn-danger delete-button fw-semibold px-4" data-id="@product.Id">
-                                <i class="fa-regular fa-trash"></i> Delete
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-
-                index++;
-            }
-
-            @if (!Model.Any())
-            {
-                <tr>
-                    <td class="text-center" colspan="7">No product found!</td>
-                </tr>
-            }
-            </tbody>
         </table>
     </div>
-
-    <partial model="pager" name="_Pager" />
 </section>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
 
 @section Scripts {
     <partial model="successMessage" name="_NotificationScriptsPartial" />
-    <partial model="pager" name="_DeleteScript" />
+
+    <script >
+      $(function() {
+        const table = $('#tblProduct')
+        const dataTable = loadDataTable(table)
+        handleDeleteButton(table, dataTable)
+        handleSearchBox(dataTable)
+      })
+
+
+      function loadDataTable(table) {
+        return table.DataTable({
+              columnDefs: [
+                  {orderable: false, targets: [3,6]}
+              ],
+              ajax: {url: "/admin/product/getall"},
+              columns: [
+                  {
+                      "render": function (data, type, full, meta) {
+                          return meta.row + 1;
+                      }
+                  },
+                  {data: "name",},
+                  {data: "price"},
+                  {
+                      data: "imageUrl",
+                      "render": function (data) {
+                          return `<img alt="Product image" src="/images/product/${data}" style="width: 75px">`
+                      }
+                  },
+                  {data: "category.name"},
+                  {
+                      data: "createdAt",
+                      "render": function (data) {
+                          return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                      }
+                  },
+                  {
+                      data: "id",
+                      "render": function (data) {
+                          return `<div class="d-flex">
+                                <a href="/admin/product/upsert?id=${data}" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                                    <i class="fa-pen-to-square fa-regular"></i> Edit
+                                </a>
+
+                                <button class="btn btn-danger delete-button fw-semibold px-4" data-id="${data}">
+                                    <i class="fa-regular fa-trash"></i> Delete
+                                </button>
+                              </div>`
+                      }
+                  },
+              ]
+          })
+      }
+
+      function handleDeleteButton(table, dataTable) {
+          table.on( "click", ".delete-button", async function() {
+              const itemId = $(this).data('id')
+              const url = `/Admin/Product/Delete/${itemId}`
+
+              const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+              })
+
+              if (result && result.isConfirmed) {
+                 const form = $('#__AjaxAntiForgeryForm');
+                 const token = $('input[name="__RequestVerificationToken"]', form).val();
+                 $.ajax({
+                      url: url,
+                      type: "DELETE",
+                      data: { __RequestVerificationToken: token },
+                      success: function (data) {
+                          dataTable.ajax.reload()
+                          Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully!',
+                            text: data.message,
+                            timer: 1500
+                          })
+                      }
+                  })
+              }
+          });
+      }
+
+      function handleSearchBox(dataTable) {
+          //Enable search box outside
+          const searchInput = $("#search")
+          const clearSearchButton = $("#clearButton")
+          searchInput.keyup(function () {
+              dataTable.search($(this).val()).draw()
+              if (searchInput.val().length > 0) {
+                  clearSearchButton.css("display", "block");
+              } else {
+                  clearSearchButton.css("display", "none");
+              }
+          })
+          //Clear search button
+          clearSearchButton.click(function () {
+              searchInput.val("")
+              clearSearchButton.css("display", "none");
+              dataTable.search($(this).val()).draw()
+          })
+      }
+    </script>
 }

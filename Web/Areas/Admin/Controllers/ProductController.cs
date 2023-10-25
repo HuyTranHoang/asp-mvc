@@ -23,48 +23,16 @@ public class ProductController : Controller
 
     [TempData] public string? SuccessMessage { get; set; }
 
-    public IActionResult Index(int? page, string? s, string? sortOrder)
+    public IActionResult Index()
     {
-        var query = _unitOfWork.Product
-            .GetAll("Category")
-            .AsQueryable();
+        var products = _unitOfWork.Product.GetAll();
 
-        ViewBag.NameSortParam = sortOrder == SortData.NameAsc
-            ? SortData.NameDesc
-            : SortData.NameAsc;
-
-        ViewBag.PriceSortParam = sortOrder == SortData.PriceAsc
-            ? SortData.PriceDesc
-            : SortData.PriceAsc;
-
-        ViewBag.CreatedAtParam = sortOrder == SortData.CreatedAtAsc
-            ? SortData.CreatedAtDesc
-            : SortData.CreatedAtAsc;
-
-        query = query.ApplySortProduct(sortOrder);
-
-        if (!string.IsNullOrEmpty(s))
-        {
-            s = s.Trim();
-            query = query.Where(p => p.Name.Contains(s, StringComparison.OrdinalIgnoreCase));
-        }
-
-        var pageNumber = page ?? 1;
-        var recsCount = query.Count();
-        var pager = new Pager(recsCount, pageNumber);
-
-        var recSkip = (pageNumber - 1) * pager.PageSize;
-
-        var onePageOfProducts = query.Skip(recSkip).Take(pager.PageSize);
-
-        ViewBag.Pager = pager;
-
-        return View(onePageOfProducts);
+        return View(products);
     }
 
     public IActionResult Details(int? id)
     {
-        if (id == null) return NotFound();
+        if (id is null) return NotFound();
 
         var product = _unitOfWork.Product.GetById(id);
 
@@ -78,7 +46,7 @@ public class ProductController : Controller
     {
         var productDto = new ProductDto();
 
-        if (id == null || id == 0)
+        if (id is null or 0)
         {
             productDto.Product = new Product();
         }
@@ -95,12 +63,12 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Upsert(int id,
-        [Bind("Product")]
-        ProductDto productDto,
-        IFormFile? file)
+    public IActionResult Upsert(int id, [Bind("Product")] ProductDto productDto, IFormFile? file)
     {
         if (id != productDto.Product.Id) return NotFound();
+        var isCreate = productDto.Product.Id == 0;
+
+        Validation(productDto.Product, file);
 
         if (ModelState.IsValid)
         {
@@ -123,7 +91,7 @@ public class ProductController : Controller
                 productDto.Product.ImageUrl = fileName;
             }
 
-            if (id == 0)
+            if (isCreate)
             {
                 _unitOfWork.Product.Insert(productDto.Product);
                 SuccessMessage = "New product added";
@@ -143,28 +111,42 @@ public class ProductController : Controller
         return View("upsert", productDto);
     }
 
-    [HttpPost]
-    [ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public IActionResult Delete(int id, int? page)
-    {
-        var product = _unitOfWork.Product.GetById(id);
-        _unitOfWork.Product.Delete(id);
-        if (_unitOfWork.Save() > 0)
-        {
-            var wwwRootPath = _webHostEnvironment.WebRootPath;
-            var productPath = Path.Combine(wwwRootPath, "images/product");
 
-            var oldImagePath = Path.Combine(productPath, product!.ImageUrl);
-            if (System.IO.File.Exists(oldImagePath) && product.ImageUrl != "default.jpg")
-                System.IO.File.Delete(oldImagePath);
-            SuccessMessage = "Product deleted";
+    private void Validation(Product product, IFormFile? file)
+    {
+        var isCreate = product.Id == 0;
+
+        var productNameExist = _unitOfWork.Product
+            .Get(isCreate
+                ? p => p.Name == product.Name
+                : p => p.Name == product.Name && p.Id != product.Id)
+            .Any();
+
+        if (isCreate && file == null)
+        {
+            ModelState.AddModelError("Product.ImageUrl", "Product image is required");
         }
 
-        var products = _unitOfWork.Product.GetAll();
-        var pageNumber = page ?? 1;
-        if (!Pager.HasProductsOnPage(products, pageNumber)) pageNumber -= 1;
-
-        return RedirectToAction(nameof(Index), new { page = pageNumber });
+        if (productNameExist)
+            ModelState.AddModelError("Name", "The category name already exist");
     }
+
+    #region API CALLS
+
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        var productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+        return Json(new { data = productList });
+    }
+
+    [HttpDelete]
+    [ValidateAntiForgeryToken]
+    public IActionResult Delete(int id)
+    {
+        _unitOfWork.Product.Delete(id);
+        return Json(_unitOfWork.Save() > 0 ? new { success = true, message = "Product deleted" } : new { success = false, message = "Error while deleting" });
+    }
+
+    #endregion
 }

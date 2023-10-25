@@ -2,13 +2,6 @@
 
 @{
     ViewData["Title"] = "CoverType";
-    ViewData["ControllerName"] = "CoverType";
-
-    var index = 1;
-
-    var pager = ViewBag.Pager != null ? ViewBag.Pager : new Pager();
-
-    var searchString = Context.Request.Query["s"];
 
     var successMessage = TempData["SuccessMessage"];
 
@@ -44,72 +37,116 @@
                 <th scope="col" style="width: 20%">Actions</th>
             </tr>
             </thead>
-            <tbody>
-            @foreach (var coverType in Model)
-            {
-                <tr>
-                    <td>@index</td>
-                    <td>@coverType.Name</td>
-                    <td>@coverType.CreatedAt</td>
-                    <td>
-                        <div class="d-flex">
-                            <a asp-action="Upsert" asp-route-id="@coverType.Id" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
-                                <i class="fa-pen-to-square fa-regular"></i> Edit
-                            </a>
-
-                            <button class="btn btn-danger delete-button fw-semibold px-4" data-id="@coverType.Id">
-                                <i class="fa-regular fa-trash"></i> Delete
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-
-                index++;
-            }
-
-            @if (!Model.Any())
-            {
-                <tr>
-                    <td class="text-center" colspan="5">No cover type found!</td>
-                </tr>
-            }
-            </tbody>
         </table>
     </div>
 </section>
 
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
 @section Scripts {
     <partial model="successMessage" name="_NotificationScriptsPartial" />
-    <partial model="pager" name="_DeleteScript" />
-
     <script >
       $(function() {
-          const dataTable = $('#tblCoverType').DataTable({
-            columnDefs: [
-                {orderable: false, targets: 3}
-            ],
-          })
-
-          handleSearchBox(dataTable)
-          function handleSearchBox(dataTable) {
-              //Enable search box outside
-              const searchInput = $("#search")
-              const clearSearchButton = $("#clearButton")
-              searchInput.keyup(function () {
-                  dataTable.search($(this).val()).draw()
-                  if (searchInput.val().length > 0) {
-                      clearSearchButton.css("display", "block");
-                  } else {
-                      clearSearchButton.css("display", "none");
-                  }
-              })
-              //Clear search button
-              clearSearchButton.click(function () {
-                  searchInput.val("")
-                  clearSearchButton.css("display", "none");
-                  dataTable.search($(this).val()).draw()
-              })
-          }
+        const table = $('#tblCoverType')
+        const dataTable = loadDataTable(table)
+        handleDeleteButton(table, dataTable)
+        handleSearchBox(dataTable)
       })
+
+
+      function loadDataTable(table) {
+        return table.DataTable({
+              columnDefs: [
+                  {orderable: false, targets: 3}
+              ],
+              ajax: {url: "/admin/covertype/getall"},
+              columns: [
+                  {
+                      "render": function (data, type, full, meta) {
+                          return meta.row + 1;
+                      }
+                  },
+                  {data: "name"},
+                  {
+                      data: "createdAt",
+                      "render": function (data) {
+                          return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                      }
+                  },
+                  {
+                      data: "id",
+                      "render": function (data) {
+                          return `<div class="d-flex">
+                                <a href="/admin/covertype/upsert?id=${data}" class="btn btn-secondary fw-semibold me-3 px-4 text-white">
+                                    <i class="fa-pen-to-square fa-regular"></i> Edit
+                                </a>
+
+                                <button class="btn btn-danger delete-button fw-semibold px-4" data-id="${data}">
+                                    <i class="fa-regular fa-trash"></i> Delete
+                                </button>
+                              </div>`
+                      }
+                  },
+              ]
+          })
+      }
+
+      function handleDeleteButton(table, dataTable) {
+          table.on( "click", ".delete-button", async function() {
+              const itemId = $(this).data('id')
+              const url = `/Admin/CoverType/Delete/${itemId}`
+
+              const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!'
+              })
+
+              if (result && result.isConfirmed) {
+                 const form = $('#__AjaxAntiForgeryForm');
+                 const token = $('input[name="__RequestVerificationToken"]', form).val();
+                 $.ajax({
+                      url: url,
+                      type: "DELETE",
+                      data: { __RequestVerificationToken: token },
+                      success: function (data) {
+                          dataTable.ajax.reload()
+                          Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully!',
+                            text: data.message,
+                            timer: 1500
+                          })
+                      }
+                  })
+              }
+          });
+      }
+
+      function handleSearchBox(dataTable) {
+          //Enable search box outside
+          const searchInput = $("#search")
+          const clearSearchButton = $("#clearButton")
+          searchInput.keyup(function () {
+              dataTable.search($(this).val()).draw()
+              if (searchInput.val().length > 0) {
+                  clearSearchButton.css("display", "block");
+              } else {
+                  clearSearchButton.css("display", "none");
+              }
+          })
+          //Clear search button
+          clearSearchButton.click(function () {
+              searchInput.val("")
+              clearSearchButton.css("display", "none");
+              dataTable.search($(this).val()).draw()
+          })
+      }
     </script>
 }
