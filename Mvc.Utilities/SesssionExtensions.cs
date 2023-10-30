@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
-namespace Mvc.Utilities.Helpers;
+namespace Mvc.Utilities;
 
-public static class SesssionExtensions
+public static class SessionExtensions
 {
     // HttpContext.Sesssion.Set<T>(key, value)
     public static void Set<T>(this ISession session, string key, T value)
@@ -11,9 +11,9 @@ public static class SesssionExtensions
         session.SetString(key, JsonSerializer.Serialize(value));
     }
 
-    public static T? Get<T>(this ISession session, string key)
+    public static T Get<T>(this ISession session, string key)
     {
         var value = session.GetString(key);
-        return value is null ? default : JsonSerializer.Deserialize<T>(value);
+        return value == null ? default : JsonSerializer.Deserialize<T>(value);
     }
 }

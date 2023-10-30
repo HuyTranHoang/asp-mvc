@@ -1,0 +1,79 @@
+﻿@model List<BasketItem>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<section>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary my-3">Continue shopping</a>
+
+    @if (Model.Any())
+    {
+        @foreach (var cart in Model)
+        {
+            <div class="card mb-3">
+                <div class="g-0 row">
+                    <div class="col-md-1 text-center">
+                        <img alt="Product image" class="p-3 rounded-start" src="~/images/product/@cart.Product.ImageUrl" style="width: 100px">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="p-3 row">
+                            <div class="col-8">
+                                <h5 class="text-primary">@cart.Product.Name</h5>
+                                <p>
+                                    <small class="text-body-secondary">@cart.Product.Description</small>
+                                </p>
+                            </div>
+
+                            <div class="col-2" style="margin-top: 32px">
+                                <h5 class="card-title">@($"{cart.Product.Price,0:C0}")</h5>
+                                <p class="card-text">
+                                    <small class="text-body-secondary">x @cart.Count</small>
+                                </p>
+                            </div>
+                            <div class="col-2" style="margin-top: 32px">
+                                <div class="input-group" style="width: 130px;">
+                                    <a asp-action="" asp-route-cartId="@cart.Product.Id" class="btn btn-outline-secondary">
+                                        <i class="fa-light fa-minus"></i>
+                                    </a>
+
+                                    <a asp-action="" asp-route-cartId="@cart.Product.Id" class="btn btn-outline-secondary">
+                                        <i class="fa-light fa-plus"></i>
+                                    </a>
+                                </div>
+
+                                <a asp-action="" asp-route-cartId="@cart.Product.Id" class="btn btn-danger mt-3">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <h3 class="p-5 text-warning">Shopping cart is empty</h3>
+            </div>
+        </div>
+    }
+
+
+    <hr />
+    <div class="mt-5 text-center">
+        <div class="row">
+            <div class="col-3 offset-3">
+                <h4>TOTAL (VND)</h4>
+            </div>
+            <div class="col-3">
+                @* <h4>@($"{Model.OrderTotal,0:C0}")</h4> *@
+            </div>
+        </div>
+
+        <button class="bg-gradient btn btn-primary mt-4 px-5 text-white">Summary</button>
+    </div>
+
+</section>

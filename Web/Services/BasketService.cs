@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Mvc.DataAccess.Repository.IRepository;
+﻿using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
-using Mvc.Utilities.Helpers;
+using Mvc.Utilities;
 
-namespace Mvc.DataAccess.Repository;
+namespace MVC.Services;
 
 public class BasketService : IBasketService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IHttpContextAccessor _contextAccessor;
-    private readonly string shoppingCartSession = "_ShoppingCartSession";
+
 
     public BasketService(IUnitOfWork unitOfWork, IHttpContextAccessor contextAccessor)
     {
@@ -20,11 +19,11 @@ public class BasketService : IBasketService
     public void Add(int id, int quantity)
     {
         List<BasketItem> shoppingCartList;
-        if (_contextAccessor.HttpContext.Session.Get<List<BasketItem>>(shoppingCartSession) != default)
+        if (_contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession) != default)
         {
-            shoppingCartList = _contextAccessor.HttpContext.Session.Get<BasketItem>(shoppingCartSession);
+            shoppingCartList = _contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession);
 
-            if(shoppingCartList.Where(i => i.Product.Id == 0).Any())
+            if(shoppingCartList.Any(i => i.Product.Id == 0))
             {
                 shoppingCartList.Where(i => i.Product.Id == id).Select(x =>
                 {
@@ -50,23 +49,23 @@ public class BasketService : IBasketService
                 }
             };
         }
-        _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(shoppingCartSession, shoppingCartList);
+        _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(SD.ShoppingCartSession, shoppingCartList);
     }
 
     public void Remove(int id)
     {
-        if (_contextAccessor.HttpContext.Session.Get<List<BasketItem>>(shoppingCartSession) != default)
+        if (_contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession) != default)
         {
-            List<BasketItem> shoppingCartList = _contextAccessor.HttpContext.Session.Get<BasketItem>(shoppingCartSession);
+            List<BasketItem> shoppingCartList = _contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession);
 
             shoppingCartList.RemoveAll(i => i.Product.Id == id);
 
-            _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(shoppingCartSession, shoppingCartList);
+            _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(SD.ShoppingCartSession, shoppingCartList);
         }
     }
 
     public void ClearBasket()
     {
-        _contextAccessor.HttpContext.Session.Remove(shoppingCartSession);
+        _contextAccessor.HttpContext.Session.Remove(SD.ShoppingCartSession);
     }
 }

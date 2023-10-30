@@ -1,4 +1,4 @@
-﻿namespace Mvc.DataAccess.Repository.IRepository;
+﻿namespace MVC.Services;
 
 public interface IBasketService
 {

@@ -60,8 +60,4 @@
         <_ContentIncludedByDefault Remove="Areas\Admin\Views\Product\_partials\DeleteScript.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Areas\Customer\Views\Basket\" />
-    </ItemGroup>
-
 </Project>

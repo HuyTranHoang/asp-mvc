@@ -6,4 +6,5 @@ public static class SD
     public const string RoleAdmin = "Admin";
 
     public const string SessionCart = "SessionShoppingCart";
+    public const string ShoppingCartSession = "_ShoppingCartSession";
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mvc.DataAccess.Repository.IRepository;
 using Mvc.Models;
-using Mvc.Utilities.Helpers;
+using MVC.Services;
+using Mvc.Utilities;
 
 namespace MVC.Areas.Customer.Controllers;
 
@@ -9,7 +9,6 @@ namespace MVC.Areas.Customer.Controllers;
 public class BasketController : Controller
 {
     private readonly IBasketService _basketService;
-    private readonly string shoppingCartSession = "_ShoppingCartSession";
 
     public BasketController(IBasketService basketService)
     {
@@ -20,9 +19,9 @@ public class BasketController : Controller
     {
         List<BasketItem> shoppingCartList;
 
-        if(HttpContext.Session.Get<List<BasketItem>>(shoppingCartSession) != default)
+        if(HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession) != default)
         {
-            shoppingCartList = HttpContext.Session.Get<List<BasketItem>>(shoppingCartSession)!;
+            shoppingCartList = HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession)!;
         } else
         {
             shoppingCartList = new List<BasketItem>();
