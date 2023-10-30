@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Mvc.Models\Mvc.Models.csproj" />
+      <ProjectReference Include="..\Mvc.Utilities\Mvc.Utilities.csproj" />
     </ItemGroup>
 
 </Project>
