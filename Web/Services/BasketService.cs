@@ -18,37 +18,22 @@ public class BasketService : IBasketService
 
     public void Add(int id, int quantity)
     {
-        List<BasketItem> shoppingCartList;
-        if (_contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession) != default)
-        {
-            shoppingCartList = _contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession);
+        List<BasketItem> shoppingCartList = _contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession) ?? new List<BasketItem>();
 
-            if(shoppingCartList.Any(i => i.Product.Id == 0))
-            {
-                shoppingCartList.Where(i => i.Product.Id == id).Select(x =>
-                {
-                    x.Count += quantity;
-                    return x;
-                }).ToList();
-            } else
-            {
-                shoppingCartList.Add(new BasketItem
-                {
-                    Count = quantity,
-                    Product = _unitOfWork.Product.GetById(id)
-                });
-            }
-        } else
+        var existingItem = shoppingCartList.FirstOrDefault(i => i.Product.Id == id);
+        if (existingItem != null)
         {
-            shoppingCartList = new List<BasketItem>
-            {
-                new BasketItem
-                {
-                    Count = quantity,
-                    Product = _unitOfWork.Product.GetById(id)
-                }
-            };
+            existingItem.Count += quantity;
         }
+        else
+        {
+            shoppingCartList.Add(new BasketItem
+            {
+                Count = quantity,
+                Product = _unitOfWork.Product.GetById(id)
+            });
+        }
+
         _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(SD.ShoppingCartSession, shoppingCartList);
     }
 
@@ -61,6 +46,34 @@ public class BasketService : IBasketService
             shoppingCartList.RemoveAll(i => i.Product.Id == id);
 
             _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(SD.ShoppingCartSession, shoppingCartList);
+        }
+    }
+
+    public void IncreaseQuantity(int id)
+    {
+        List<BasketItem> shoppingCartList = _contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession);
+        if (shoppingCartList != null)
+        {
+            var existingItem = shoppingCartList.FirstOrDefault(i => i.Product.Id == id);
+            if (existingItem != null)
+            {
+                existingItem.Count++;
+                _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(SD.ShoppingCartSession, shoppingCartList);
+            }
+        }
+    }
+
+    public void DecreaseQuantity(int id)
+    {
+        List<BasketItem> shoppingCartList = _contextAccessor.HttpContext.Session.Get<List<BasketItem>>(SD.ShoppingCartSession);
+        if (shoppingCartList != null)
+        {
+            var existingItem = shoppingCartList.FirstOrDefault(i => i.Product.Id == id);
+            if (existingItem != null)
+            {
+                existingItem.Count = Math.Max(0, existingItem.Count - 1);
+                _contextAccessor.HttpContext.Session.Set<List<BasketItem>>(SD.ShoppingCartSession, shoppingCartList);
+            }
         }
     }
 

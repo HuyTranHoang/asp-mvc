@@ -1,4 +1,4 @@
-@model ShoppingCart
+@model BasketItem
 
 @{
     ViewData["Title"] = "Details";
@@ -10,8 +10,8 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-action="Details">
-    <input asp-for="ProductId" type="hidden">
+<form asp-controller="Basket" asp-action="AddToCart">
+    <input asp-for="Product.Id" type="hidden">
     <a asp-action="Index" class="btn btn-outline-primary my-3">Back to home</a>
     <div class="row">
         <div class="col-4">
@@ -57,13 +57,13 @@
 
 
             <div class="align-items-center d-flex">
-                <label asp-for="Quantity" class="fs-5 pe-5"></label>
+                <label asp-for="Count" class="fs-5 pe-5"></label>
                 <div class="input-group" style="width: 130px;">
-                    <a class="input-group-text text-decoration-none" onclick="quantityMinus()" style="cursor: pointer">
+                    <a class="input-group-text text-decoration-none" onclick="countMinus()" style="cursor: pointer">
                         <i class="fa-light fa-minus"></i>
                     </a>
-                    <input asp-for="Quantity" class="form-control fw-semibold" onblur="validateInput()">
-                    <a class="input-group-text text-decoration-none" onclick="quantityPlus()" style="cursor: pointer">
+                    <input asp-for="Count" class="form-control fw-semibold" onblur="validateInput()">
+                    <a class="input-group-text text-decoration-none" onclick="countPlus()" style="cursor: pointer">
                         <i class="fa-light fa-plus"></i>
                     </a>
                 </div>
@@ -84,28 +84,28 @@
 
 @section Scripts {
     <script>
-    const quantity = $("#Quantity");
+    const count = $("#Count");
 
-    function quantityPlus() {
-        const curQuantity = quantity.val()
-        quantity.val(+curQuantity + 1)
+    function countPlus() {
+        const curCount = count.val()
+        count.val(+curCount + 1)
     }
 
-    function quantityMinus() {
-        const curQuantity = quantity.val()
-        if (curQuantity > 1) {
-            quantity.val(+curQuantity - 1)
+    function countMinus() {
+        const curCount = count.val()
+        if (curCount > 1) {
+            count.val(+curCount - 1)
         }
     }
 
     function validateInput() {
-        const curQuantity = quantity.val()
+        const curCount = count.val()
 
-        if (curQuantity < 0)
-            quantity.val(1)
+        if (curCount < 0)
+            count.val(1)
 
-        if (curQuantity > 999)
-            quantity.val(999)
+        if (curCount > 999)
+            count.val(999)
     }
     </script>
 }

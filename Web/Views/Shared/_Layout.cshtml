@@ -60,7 +60,7 @@
                     @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart) != null)
                     {
                         <li class="nav-item">
-                            <a asp-action="Index" asp-area="" asp-controller="Cart" class="nav-link position-relative @(returnUrl.Contains("/Cart") ? "active" : "")">
+                            <a asp-action="Index" asp-controller="Basket" class="nav-link position-relative @(returnUrl.Contains("/Cart") ? "active" : "")">
                                 <i class="fa-cart-shopping fa-light"></i>
                                 <span class="badge bg-danger position-absolute top-0 translate-middle-x" style="font-size: 10px">
                                     @HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart)
@@ -71,7 +71,7 @@
                     else
                     {
                         <li class="nav-item">
-                            <a asp-action="Index" asp-area="" asp-controller="Cart" class="nav-link position-relative @(returnUrl.Contains("/Cart") ? "active" : "")">
+                            <a asp-action="Index" asp-controller="Basket" class="nav-link position-relative @(returnUrl.Contains("/Cart") ? "active" : "")">
                                 <i class="fa-cart-shopping fa-light"></i>
                                 <span class="badge bg-danger position-absolute top-0 translate-middle-x" style="font-size: 10px">
                                     0

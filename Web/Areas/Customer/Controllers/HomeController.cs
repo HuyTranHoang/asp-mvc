@@ -31,16 +31,15 @@ public class HomeController : Controller
 
     public IActionResult Details(int id)
     {
-        var shoppingCart = new ShoppingCart
+        var basketItem = new BasketItem
         {
             Product = _unitOfWork.Product.Get(p => p.Id == id, "Category,CoverType").FirstOrDefault(),
-            ProductId = id,
-            Quantity = 1
+            Count = 1
         };
 
-        if (shoppingCart.Product == null) return NotFound();
+        if (basketItem.Product == null) return NotFound();
 
-        return View(shoppingCart);
+        return View(basketItem);
     }
 
     [HttpPost]

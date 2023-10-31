@@ -1,4 +1,4 @@
-﻿@model List<BasketItem>
+﻿@model ShoppingCartDto
 
 @{
     ViewData["Title"] = "Shopping Cart";
@@ -9,9 +9,9 @@
 <section>
     <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary my-3">Continue shopping</a>
 
-    @if (Model.Any())
+    @if (Model.BasketItemList.Any())
     {
-        @foreach (var cart in Model)
+        @foreach (var cart in Model.BasketItemList)
         {
             <div class="card mb-3">
                 <div class="g-0 row">
@@ -28,23 +28,23 @@
                             </div>
 
                             <div class="col-2" style="margin-top: 32px">
-                                <h5 class="card-title">@($"{cart.Product.Price,0:C0}")</h5>
+                                <h5 class="card-title">@($"{cart.Price,0:C0}")</h5>
                                 <p class="card-text">
                                     <small class="text-body-secondary">x @cart.Count</small>
                                 </p>
                             </div>
                             <div class="col-2" style="margin-top: 32px">
                                 <div class="input-group" style="width: 130px;">
-                                    <a asp-action="" asp-route-cartId="@cart.Product.Id" class="btn btn-outline-secondary">
+                                    <a asp-action="Minus" asp-route-productId="@cart.Product.Id" class="btn btn-outline-secondary">
                                         <i class="fa-light fa-minus"></i>
                                     </a>
 
-                                    <a asp-action="" asp-route-cartId="@cart.Product.Id" class="btn btn-outline-secondary">
+                                    <a asp-action="Plus" asp-route-productId="@cart.Product.Id" class="btn btn-outline-secondary">
                                         <i class="fa-light fa-plus"></i>
                                     </a>
                                 </div>
 
-                                <a asp-action="" asp-route-cartId="@cart.Product.Id" class="btn btn-danger mt-3">Remove</a>
+                                <a asp-action="Remove" asp-route-productId="@cart.Product.Id" class="btn btn-danger mt-3">Remove</a>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                 <h4>TOTAL (VND)</h4>
             </div>
             <div class="col-3">
-                @* <h4>@($"{Model.OrderTotal,0:C0}")</h4> *@
+                <h4>@($"{Model.OrderTotal,0:C0}")</h4>
             </div>
         </div>
 
